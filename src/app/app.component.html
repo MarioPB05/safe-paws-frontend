@@ -1,4 +1,7 @@
-<h1>Safe Paws Frontend</h1>
-
+<ng-container *ngIf="loading$ | async as loading">
+  <div *ngIf="loading" [@fade] class="loading-container">
+    <app-loading></app-loading>
+  </div>
+</ng-container>
 
 <router-outlet />

@@ -6,7 +6,11 @@ module.exports = {
     "./src/**/*.{html,ts}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        nunitoSans: ['Nunito Sans', "sans-serif"],
+      }
+    },
   },
   plugins: [],
 }
