@@ -35,40 +35,40 @@
         "./src/app/shared/*"
       ],
       "@spartan-ng/ui-button-helm": [
-        ".\\libs/ui/ui-button-helm/src/index.ts"
+        "./src/libs/ui/ui-button-helm/src/index.ts"
       ],
       "@spartan-ng/ui-input-helm": [
-        ".\\libs/ui/ui-input-helm/src/index.ts"
+        "./src/libs/ui/ui-input-helm/src/index.ts"
       ],
       "@spartan-ng/ui-formfield-helm": [
-        ".\\libs/ui/ui-formfield-helm/src/index.ts"
+        "./src/libs/ui/ui-formfield-helm/src/index.ts"
       ],
       "@spartan-ng/ui-alertdialog-helm": [
-        ".\\libs/ui/ui-alertdialog-helm/src/index.ts"
+        "./src/libs/ui/ui-alertdialog-helm/src/index.ts"
       ],
       "@spartan-ng/ui-badge-helm": [
-        ".\\libs/ui/ui-badge-helm/src/index.ts"
+        "./src/ibs/ui/ui-badge-helm/src/index.ts"
       ],
       "@spartan-ng/ui-icon-helm": [
-        ".\\libs/ui/ui-icon-helm/src/index.ts"
+        "./src/libs/ui/ui-icon-helm/src/index.ts"
       ],
       "@spartan-ng/ui-scrollarea-helm": [
-        ".\\libs/ui/ui-scrollarea-helm/src/index.ts"
+        "./src/libs/ui/ui-scrollarea-helm/src/index.ts"
       ],
       "@spartan-ng/ui-select-helm": [
-        ".\\libs/ui/ui-select-helm/src/index.ts"
+        "./src/libs/ui/ui-select-helm/src/index.ts"
       ],
       "@spartan-ng/ui-sonner-helm": [
-        ".\\libs/ui/ui-sonner-helm/src/index.ts"
+        "./src/libs/ui/ui-sonner-helm/src/index.ts"
       ],
       "@spartan-ng/ui-tabs-helm": [
-        ".\\libs/ui/ui-tabs-helm/src/index.ts"
+        "./src/libs/ui/ui-tabs-helm/src/index.ts"
       ],
       "@spartan-ng/ui-tooltip-helm": [
-        ".\\libs/ui/ui-tooltip-helm/src/index.ts"
+        "./src/libs/ui/ui-tooltip-helm/src/index.ts"
       ],
       "@spartan-ng/ui-typography-helm": [
-        ".\\libs/ui/ui-typography-helm/src/index.ts"
+        "./src/libs/ui/ui-typography-helm/src/index.ts"
       ]
     }
   },
