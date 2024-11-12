@@ -21,12 +21,55 @@
       "ES2022",
       "dom"
     ],
-    "baseUrl": "./src",
     "paths": {
-      "@features/*": ["app/features/*"],
-      "@dashboard/*": ["app/features/dashboard/*"],
-      "@core/*": ["app/core/*"],
-      "@shared/*": ["app/shared/*"]
+      "@features/*": [
+        "./src/app/features/*"
+      ],
+      "@dashboard/*": [
+        "./src/app/features/dashboard/*"
+      ],
+      "@core/*": [
+        "./src/app/core/*"
+      ],
+      "@shared/*": [
+        "./src/app/shared/*"
+      ],
+      "@spartan-ng/ui-button-helm": [
+        "./src/libs/ui/ui-button-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-input-helm": [
+        "./src/libs/ui/ui-input-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-formfield-helm": [
+        "./src/libs/ui/ui-formfield-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-alertdialog-helm": [
+        "./src/libs/ui/ui-alertdialog-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-badge-helm": [
+        "./src/ibs/ui/ui-badge-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-icon-helm": [
+        "./src/libs/ui/ui-icon-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-scrollarea-helm": [
+        "./src/libs/ui/ui-scrollarea-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-select-helm": [
+        "./src/libs/ui/ui-select-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-sonner-helm": [
+        "./src/libs/ui/ui-sonner-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-tabs-helm": [
+        "./src/libs/ui/ui-tabs-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-tooltip-helm": [
+        "./src/libs/ui/ui-tooltip-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-typography-helm": [
+        "./src/libs/ui/ui-typography-helm/src/index.ts"
+      ]
     }
   },
   "angularCompilerOptions": {
