@@ -26,6 +26,7 @@
     "@spartan-ng/ui-dialog-brain": "0.0.1-alpha.356",
     "@spartan-ng/ui-formfield-brain": "0.0.1-alpha.356",
     "@spartan-ng/ui-forms-brain": "0.0.1-alpha.356",
+    "@spartan-ng/ui-label-brain": "0.0.1-alpha.356",
     "@spartan-ng/ui-select-brain": "0.0.1-alpha.356",
     "@spartan-ng/ui-tabs-brain": "0.0.1-alpha.356",
     "@spartan-ng/ui-tooltip-brain": "0.0.1-alpha.356",
