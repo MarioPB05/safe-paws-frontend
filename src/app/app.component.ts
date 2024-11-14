@@ -5,11 +5,12 @@ import {Observable, tap} from 'rxjs';
 import {AsyncPipe, NgIf} from '@angular/common';
 import {LoadingService} from '@core/services/loading.service';
 import {animate, style, transition, trigger} from '@angular/animations';
+import {HlmToasterComponent} from '@spartan-ng/ui-sonner-helm';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, LoadingComponent, NgIf, AsyncPipe],
+  imports: [RouterOutlet, LoadingComponent, NgIf, AsyncPipe, HlmToasterComponent],
   templateUrl: './app.component.html',
   animations: [
     trigger('fade', [ // Definir la animación
