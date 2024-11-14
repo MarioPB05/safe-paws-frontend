@@ -1,0 +1,27 @@
+<div class="relative w-screen h-screen bg-[url('/auth_bg.png')] bg-no-repeat bg-cover">
+  <div class="absolute w-screen pt-4 max-sm:px-4">
+    <img src="/full_logo.png" class="max-w-fit w-full mx-auto" alt="Logotipo de Safe Paws">
+  </div>
+  <div class="size-full bg-white bg-opacity-80 flex justify-center items-center">
+    <div class="bg-white flex flex-col justify-center items-center shadow-2xl border-2 border-primary rounded-3xl p-10">
+      <div class="text-center">
+        <h2 hlmH2>Iniciar Sesión</h2>
+        <p hlmP class="mb-10 text-gray-500" style="margin-top: 8px;">¿Has olvidado tu contraseña? <a href="#" class="text-primary">Click Aquí</a></p>
+      </div>
+
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-col items-center w-full">
+        <hlm-form-field class="mb-6 w-full">
+          <input class="max-w-80 w-full" hlmInput placeholder='Nombre de usuario' type='text' formControlName="username" />
+          <hlm-error>Introduce un nombre de usuario</hlm-error>
+        </hlm-form-field>
+
+        <hlm-form-field class="w-full">
+          <input class="max-w-80 w-full" hlmInput placeholder='Contraseña' type='password' formControlName="password" />
+          <hlm-error>Introduce la contraseña</hlm-error>
+        </hlm-form-field>
+
+        <button [disabled]="isSubmitting" type="submit" class="mt-6" hlmBtn>Iniciar Sesión</button>
+      </form>
+    </div>
+  </div>
+</div>
