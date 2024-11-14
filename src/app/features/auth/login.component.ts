@@ -56,9 +56,6 @@ export class LoginComponent {
             description: 'El usuario o la contraseña son incorrectos'
           });
           this.isSubmitting = false;
-        },
-        complete: () => {
-          console.log('asd')
         }
       });
 
