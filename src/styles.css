@@ -55,3 +55,7 @@
 --ring: 240 4.9% 83.9%;
 color-scheme: dark;
 }
+
+body {
+  background-color: #f7f7f7;
+}
