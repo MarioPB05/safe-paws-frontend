@@ -19,7 +19,7 @@ import {HlmToasterComponent} from '@spartan-ng/ui-sonner-helm';
         animate('500ms', style({ opacity: 1 })) // Desaparece gradualmente en 500ms
       ]),
       transition(':leave', [
-        animate('500ms', style({ opacity: 0 })) // Desaparece gradualmente
+        animate('200ms', style({ opacity: 0 })) // Desaparece gradualmente
       ])
     ])
   ]
