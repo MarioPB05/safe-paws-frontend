@@ -1,12 +1,12 @@
-<div class="relative border-4 border-primary rounded-3xl max-w-[280px] flex flex-col items-center m-5 mt-20 mb-20 pt-[110px] pb-6 px-6">
-  <div class="absolute flex flex-col items-end top-[-35%] left-1/2 transform -translate-x-1/2 size-[200px] rounded-full border-4 border-primary bg-white">
-    <img class="size-full rounded-full" src="https://m.media-amazon.com/images/I/51tguJ0-J-L.jpg" alt="">
+<div class="relative border-4 border-primary rounded-3xl w-[210px] sm:w-[280px] h-[310px] flex flex-col items-center m-5 mt-20 mb-20 pt-[110px] pb-6 px-6">
+  <div class="absolute flex flex-col items-end top-[-35%] left-1/2 transform -translate-x-1/2 sm:size-[200px] size-[170px] rounded-full border-4 border-primary bg-white">
+    <img class="size-full rounded-full" [src]="adoption.photo">
     <span hlmBadge class="mx-auto -mt-4">
       <hlm-icon size='sm' name="lucideMapPin" />
-      Sevilla
+      {{ adoption.addressVillage }}
     </span>
   </div>
-  <h3 hlmH3>Javichu</h3>
-  <p hlmP class="text-gray-500 text-center" style="margin-top: 0px !important;">Un cocodrilo muy amigable, gran amigo de todos</p>
+  <h3 hlmH3>{{ adoption.name }}</h3>
+  <p hlmP class="text-gray-500 text-center max-h-[200px]" style="margin-top: 0 !important;">{{ truncateText(adoption.description, 70) }}</p>
   <button hlmBtn class="mt-8">Adoptar Ahora</button>
 </div>
