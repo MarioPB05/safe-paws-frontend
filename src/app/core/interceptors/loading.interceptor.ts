@@ -15,6 +15,6 @@ export const loadingInterceptor: HttpInterceptorFn = (req, next) => {
   loadingService.loadingOn();
 
   return next(req).pipe(
-    finalize(() => loadingService.loadingOff())
+    finalize(() => setTimeout(() => loadingService.loadingOff(), 250))
   );
 };
