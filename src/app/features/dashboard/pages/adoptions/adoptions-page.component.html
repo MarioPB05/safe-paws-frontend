@@ -1,4 +1,18 @@
-<div class="grid 2xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 grid-flow-row gap-24">
+<div *ngIf="!error" class="grid 2xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 grid-flow-row gap-24">
   <app-adoption-card class="justify-self-center" *ngFor="let adoption of adoptions" [adoption]="adoption"/>
+</div>
+
+<div *ngIf="error" class="flex flex-col items-center px-4">
+  <img class="max-w-[600px] w-full mb-8"
+       src="/sad_dog.png"
+       alt="Un perrito triste">
+
+  <div hlmAlert variant="destructive" class="w-fit mx-auto" >
+    <hlm-icon hlmAlertIcon name="lucideAlertTriangle" />
+    <h4 hlmAlertTitle>Sin adopciones disponibles</h4>
+    <p hlmAlertDesc class="text-balance w-fit">
+      Actualmente no hay mascotas en adopción, pero pronto actualizaremos nuestro listado. Inténtalo más tarde
+    </p>
+  </div>
 </div>
 
