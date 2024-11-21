@@ -78,6 +78,9 @@
       ],
       "@spartan-ng/ui-sheet-helm": [
         "./src/libs/ui/ui-sheet-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-alert-helm": [
+        ".\\src/libs/ui/ui-alert-helm/src/index.ts"
       ]
     }
   },
