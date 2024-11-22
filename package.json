@@ -32,6 +32,8 @@
     "@spartan-ng/ui-tooltip-brain": "0.0.1-alpha.356",
     "class-variance-authority": "^0.6.0",
     "clsx": "^2.1.1",
+    "dayjs": "^1.11.13",
+    "dependencies": "^0.0.1",
     "ngx-scrollbar": "^13.0.1",
     "ngx-sonner": "^2.0.0",
     "rxjs": "~7.8.0",
