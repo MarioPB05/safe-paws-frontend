@@ -23,8 +23,6 @@ import dayjs from 'dayjs';
   providers: [provideIcons({ lucideMapPin, lucideUser2 , lucideCalendar, lucideEye, lucideMessagesSquare})]
 })
 export class RequestCardComponent {
-
-
   @Input() request!: Request;
   @Input() mode = 'received' as 'received' | 'sent';
 
@@ -43,18 +41,6 @@ export class RequestCardComponent {
     }
   }
 
-  formatStatus(): string {
-    switch (this.request.requestStatus) {
-      case 2:
-        return 'Approved';
-      case 0:
-        return 'Pending';
-      case 1:
-        return 'Rejected';
-      default:
-        return 'Unknown';
-    }
-  }
   getStatusClass(): string {
     switch (this.request.requestStatus) {
       case 2:
@@ -68,6 +54,5 @@ export class RequestCardComponent {
         return 'bg-gray-500';
     }
   }
-
 
 }
