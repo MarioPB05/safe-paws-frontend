@@ -9,6 +9,14 @@ module.exports = {
     extend: {
       fontFamily: {
         fredoka: ['Fredoka', "sans-serif"],
+      },
+      colors: {
+        primary: {
+          100: "#F3F8F9",
+          200: "#FFDEA8",
+          300: "#FFC570",
+          400: "#FFA037",
+        }
       }
     },
   },
