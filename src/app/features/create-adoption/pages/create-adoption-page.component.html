@@ -18,7 +18,7 @@
           <span>Cambiar Imagen</span>
         </div>
 
-        <img [class.hidden]="!showPreview" class="absolute inset-0 rounded-full z-0" [src]="previewUrl" alt="Vista previa de la imagen">
+        <img [class.hidden]="!showPreview" class="absolute inset-0 rounded-full bg-white size-full z-0" [src]="previewUrl" alt="Vista previa de la imagen">
 
         <input (change)="onFileSelected($event)" type="file" class="absolute inset-0 opacity-0 cursor-pointer z-50" />
       </div>
@@ -30,14 +30,14 @@
 
   <div class="py-6 px-16 xl:ps-0">
     <div class="flex flex-col mx-auto max-w-[1200px] bg-primary-100 p-6 rounded-2xl shadow-lg border-4 border-primary-200">
-      <div class="flex justify-between">
-        <h1 hlmH1 class="mb-6">Crear Adopción</h1>
-        <a href="/dashboard" hlmBtn>Volver al Inicio</a>
+      <div class="flex max-sm:items-center sm:justify-between flex-col sm:flex-row">
+        <h1 hlmH1 class="mb-4 sm:mb-6 max-sm:text-center">Crear Adopción</h1>
+        <a href="/dashboard" class="w-fit max-sm:mb-6" hlmBtn>Volver al Inicio</a>
       </div>
       <h2 class="mb-6" hlmH2>Información del Animal</h2>
 
       <form class="mb-6" [formGroup]="form" (ngSubmit)="onSubmit()" action="">
-        <div class="flex items-center gap-6 mb-4">
+        <div class="flex flex-col md:flex-row items-center gap-6 mb-4">
           <label hlmLabel class="flex flex-col gap-2 w-full">
             Nombre
             <input class="w-full" hlmInput placeholder='Nombre del animal' formControlName="name" type='text' />
@@ -49,10 +49,7 @@
                 <hlm-select-value />
               </hlm-select-trigger>
               <hlm-select-content>
-                <hlm-option value="Apples">Perro</hlm-option>
-                <hlm-option value="Bananas">Gato</hlm-option>
-                <hlm-option value="Pears">Pears</hlm-option>
-                <hlm-option value="Strawberries">Strawberries</hlm-option>
+                <hlm-option *ngFor="let animal of animalTypes" [value]="animal.id">{{animal.name}}</hlm-option>
               </hlm-select-content>
             </brn-select>
           </label>
