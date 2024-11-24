@@ -1,14 +1,14 @@
-import {Component, inject, ViewChild} from '@angular/core';
+import {Component, inject, OnInit, ViewChild} from '@angular/core';
 import {MapComponent} from '@shared/components/map/map.component';
 import {Location} from '@core/models/map.model';
-import {NgClass} from '@angular/common';
+import {NgClass, NgForOf} from '@angular/common';
 import {HlmLabelDirective} from '@spartan-ng/ui-label-helm';
 import {HlmH1Directive, HlmH2Directive, HlmPDirective, HlmUlDirective} from '@spartan-ng/ui-typography-helm';
 import {HlmButtonDirective} from '@spartan-ng/ui-button-helm';
 import {HlmInputDirective} from '@spartan-ng/ui-input-helm';
 import {FormBuilder, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {provideIcons} from '@ng-icons/core';
-import { BrnSelectImports } from '@spartan-ng/ui-select-brain';
+import {BrnSelectImports} from '@spartan-ng/ui-select-brain';
 import { HlmSelectImports } from '@spartan-ng/ui-select-helm';
 import {lucideChevronDown, lucideChevronUp} from '@ng-icons/lucide';
 import {HlmCheckboxComponent} from '@spartan-ng/ui-checkbox-helm';
@@ -22,6 +22,8 @@ import {
 } from '@spartan-ng/ui-sheet-helm';
 import {BrnSheetContentDirective, BrnSheetTriggerDirective} from '@spartan-ng/ui-sheet-brain';
 import {toast} from 'ngx-sonner';
+import { EnumService } from '@core/services/enum.service';
+import {AnimalType} from '@core/models/enums';
 
 @Component({
   selector: 'app-create-adoption.page',
@@ -48,15 +50,17 @@ import {toast} from 'ngx-sonner';
     HlmSheetTitleDirective,
     HlmSheetDescriptionDirective,
     HlmPDirective,
-    HlmUlDirective
+    HlmUlDirective,
+    NgForOf
   ],
   providers: [provideIcons({ lucideChevronUp, lucideChevronDown })],
   templateUrl: './create-adoption-page.component.html'
 })
-export class CreateAdoptionPageComponent {
+export class CreateAdoptionPageComponent implements OnInit {
   @ViewChild('sheet') sheet!: HlmSheetComponent;
 
   private _formBuilder = inject(FormBuilder);
+  private enumService = inject(EnumService);
 
   shouldResetMap = false;
   previewUrl: string | ArrayBuffer | null = '';
@@ -69,6 +73,16 @@ export class CreateAdoptionPageComponent {
     address: [{ value: '', disabled: true }, Validators.required]
   });
   isSubmitting = false;
+
+  animalTypes: AnimalType[] = [];
+
+  ngOnInit() {
+    this.enumService.getAnimalTypes().subscribe({
+      next: (animalTypes) => {
+        this.animalTypes = animalTypes.reverse();
+      }
+    });
+  }
 
   locationUpdated(location: Location) {
     let addressInput = '';
