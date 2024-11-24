@@ -7,14 +7,12 @@ import {
   HlmTabsTriggerDirective
 } from '@spartan-ng/ui-tabs-helm';
 import { CommonModule } from '@angular/common';
-import { RequestService } from '@core/services/request.service';
+import { RequestService } from '@dashboard/services/request.service';
 import { Request } from '@core/models/request.model';
 import {HlmIconComponent} from '@spartan-ng/ui-icon-helm';
 import {provideIcons} from '@ng-icons/core';
 import {lucideCalendar, lucideEye, lucideMapPin, lucideUser2, lucideArrowUpRight, lucideArrowDownLeft} from '@ng-icons/lucide';
 import {HlmH2Directive, HlmH3Directive} from '@spartan-ng/ui-typography-helm';
-
-
 
 @Component({
   selector: 'app-adoption-requests',
