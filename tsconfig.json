@@ -73,6 +73,12 @@
       "@spartan-ng/ui-label-helm": [
         "./src/libs/ui/ui-label-helm/src/index.ts"
       ],
+      "@spartan-ng/ui-checkbox-helm": [
+        "./src/libs/ui/ui-checkbox-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-sheet-helm": [
+        "./src/libs/ui/ui-sheet-helm/src/index.ts"
+      ],
       "@spartan-ng/ui-alert-helm": [
         ".\\src/libs/ui/ui-alert-helm/src/index.ts"
       ]
