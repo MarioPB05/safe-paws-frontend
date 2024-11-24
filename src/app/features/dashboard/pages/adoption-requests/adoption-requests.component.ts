@@ -32,7 +32,6 @@ import {HlmH2Directive, HlmH3Directive} from '@spartan-ng/ui-typography-helm';
   ],
   templateUrl: './adoption-requests.component.html',
   providers: [provideIcons({ lucideMapPin, lucideUser2 , lucideCalendar, lucideEye, lucideArrowUpRight, lucideArrowDownLeft})]
-
 })
 export class AdoptionRequestsComponent implements OnInit   {
   requests: Request[] = [];
