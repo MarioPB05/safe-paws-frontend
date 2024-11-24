@@ -1,49 +1,40 @@
-<div class="border-4 border-primary rounded-2xl py-3 md:h-[100px]  md:p-3 w-full min-w-[280px] md:w-[380px] flex flex-col md:flex-row items-center gap-7 justify-between ">
-  <!-- Imagen del perro -->
-  <div class="flex flex-col p-2 md:flex-row " >
-    <div class="rounded-full flex flex-col items-center">
+<div class="relative border-4 border-primary rounded-2xl py-2 md:h-fit md:p-3 w-full min-w-[280px] md:w-[380px] flex flex-col md:flex-row items-center justify-between ">
+  <div class="size-[130px] md:absolute md:-left-16 md:top-1/2 md:-translate-y-1/2 max-md:mb-2">
+    <div class="size-full relative flex flex-col justify-end items-center">
+      <img class="absolute size-full rounded-full z-0" [src]="request.postPhoto" alt="Imagen del perro"/>
+      <div *ngIf="mode == 'sent'" [ngClass]="getStatusClass()" class="absolute top-1 right-1 rounded-full size-8 border-4 border-white"></div>
 
-      <div class="size-[130px] md:relative md:right-11">
+      <hlm-icon *ngIf="mode == 'received'" class="relative bottom-36  text-primary " size="lg" name="lucideMessagesSquare"></hlm-icon>
 
-        <img class="size-full rounded-full" [src]="request.postPhoto" alt="Imagen del perro"/>
-        <div *ngIf="mode == 'sent' " [ngClass]="getStatusClass()" class="relative bottom-32 left-24 rounded-full w-6 h-6 border-2 border-white"></div>
-
-        <hlm-icon *ngIf="mode == 'received' " class="relative bottom-36  text-primary " size="lg" name="lucideMessagesSquare"></hlm-icon>
-
-      </div>
-      <span hlmBadge class="-mt-4 gap-1 md:relative md:right-12">
-        <hlm-icon *ngIf="mode == 'sent'" size="sm" name="lucideMapPin"></hlm-icon>
-        <hlm-icon *ngIf="mode =='received' " size="sm" name="lucideCalendar"></hlm-icon>
-        {{mode == 'sent' ?  request.addressVillage : getFormattedDate() }}
+      <span hlmBadge class="z-10">
+          <hlm-icon *ngIf="mode == 'sent'" size="sm" name="lucideMapPin" class="me-2"></hlm-icon>
+          <hlm-icon *ngIf="mode =='received' " size="sm" name="lucideCalendar" class="me-2"></hlm-icon>
+          {{ mode == 'sent' ? request.addressVillage : getFormattedDate() }}
       </span>
-
     </div>
+  </div>
+
+  <!-- Parte izquierda de la tarjeta -->
+  <div class="flex flex-col p-2 md:flex-row md:ps-16 max-md:mb-6">
     <div class="flex flex-col justify-center gap-1">
-      <h3 hlmH3>
-        {{ request.postName }}
-      </h3>
+      <h3 hlmH3>{{ request.postName }}</h3>
 
-
-      <div class="text-gray-500 flex flex-row  items-center gap-1">
+      <div class="text-gray-500 flex flex-row items-center max-md:justify-center gap-1">
         <p hlmP style="margin: 0">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 inline">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+               stroke="currentColor" class="size-6 inline">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
           </svg>
-          {{  mode == 'sent' ?  request.applierName : request.ownerName }}
+          {{ mode == 'sent' ? request.applierName : request.ownerName }}
         </p>
       </div>
     </div>
   </div>
 
-
-
-    <!-- Parte derecha de la tarjeta -->
-    <div class="bg-primary rounded-xl text-white size-[80px] flex-col items-center justify-center flex mb-2 sm:mb-0">
-      <p *ngIf="mode == 'sent'" hlmP class="text-3xl font-medium">{{ getDaysElapsed() }}</p>
-      <p *ngIf="mode == 'sent'" hlmP style="margin: 0">días</p>
-      <hlm-icon *ngIf="mode == 'received'" size="lg" name="lucideEye"></hlm-icon>
-    </div>
-
-
-
+  <!-- Parte derecha de la tarjeta -->
+  <div class="bg-primary rounded-xl text-white size-[80px] flex-col items-center justify-center flex mb-2 sm:mb-0">
+    <p *ngIf="mode == 'sent'" hlmP class="text-3xl font-medium">{{ getDaysElapsed() }}</p>
+    <p *ngIf="mode == 'sent'" hlmP style="margin: 0">días</p>
+    <hlm-icon *ngIf="mode == 'received'" size="lg" name="lucideEye"></hlm-icon>
   </div>
+</div>
