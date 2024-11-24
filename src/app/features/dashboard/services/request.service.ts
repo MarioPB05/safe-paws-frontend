@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpContext} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {Request} from '@core/models/request.model';
-import {SkipLoading} from '@core/interceptors/loading.interceptor';
 
 @Injectable({
   providedIn: 'root',
