@@ -84,6 +84,9 @@
       ],
       "@spartan-ng/ui-table-helm": [
         ".\\src/libs/ui/ui-table-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-menu-helm": [
+        ".\\src/libs/ui/ui-menu-helm/src/index.ts"
       ]
     }
   },

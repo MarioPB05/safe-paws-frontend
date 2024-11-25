@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DashboardPageComponent } from '@dashboard/pages/dashboard-page.component';
 import { AdoptionsPageComponent } from '@dashboard/pages/adoptions/adoptions-page.component';
+import { AdministratorPageComponent } from '@dashboard/pages/administrator/administrator-page.component';
 
 const routes: Routes = [
   {
@@ -17,6 +18,10 @@ const routes: Routes = [
         redirectTo: 'adoptions',
         pathMatch: 'full',
       },
+      {
+        path: 'admin',
+        component: AdministratorPageComponent,
+      }
     ],
   },
 ];
