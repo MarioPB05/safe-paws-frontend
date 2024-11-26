@@ -1,0 +1,24 @@
+
+<div class="flex md:flex-row justify-around flex-col-reverse min-w-[425px] pb-24">
+  <div class="text-center flex flex-col p-5  items-center" style="border-color:#FF810A ">
+    <h2 hlmH2 class="border-none ">Tus mascotas</h2>
+    <app-pet-card></app-pet-card>
+  </div>
+  <div class="min-w-[425px] p-5">
+    <div class="text-center flex flex-col  ">
+      <h2 hlmH2 class="border-none"> Modifica tus datos </h2>
+      <form [formGroup]="form" (ngSubmit)="onSubmit()"  >
+        <div class="  flex flex-col gap-4 items-center justify-center">
+          <app-image-uploader class="size-[150px]" svgSize="size-12" textSize="text-base" (imageSelected)="imageSelected($event)" />
+          <input  formControlName="username" class="max-w-80 w-full mx-auto  border-black" hlmInput  [placeholder]="user?.username"  type='text' id="username" name="name"  />
+          <input formControlName="email" class="max-w-80 w-full mx-auto  border-black" hlmInput  [placeholder]="user?.email" type='text' id="email" name="surname"  />
+          <input formControlName="name" class="max-w-80 w-full mx-auto  border-black" hlmInput  [placeholder]="user?.client?.name" placeholder='Nombre' type='text' id="name" name="surname"/>
+          <input formControlName="surname" class="max-w-80 w-full mx-auto  border-black" hlmInput  [placeholder]="user?.client?.surname" placeholder='Apellido' type='tel' id="surname" name="surname"/>
+          <input formControlName="dni" class="max-w-80 w-full mx-auto  border-black" hlmInput  [placeholder]="user?.client?.dni" type='text' id="dni" name="surname"/>
+          <button hlmBtn [disabled]="isSubmitting"  class=" max-w-[180px] w-[180px] mb-0 h-10" type="submit" >Guardar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
