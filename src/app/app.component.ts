@@ -12,32 +12,6 @@ import {HlmToasterComponent} from '@spartan-ng/ui-sonner-helm';
   imports: [RouterOutlet, LoadingComponent, NgIf, AsyncPipe, HlmToasterComponent],
   templateUrl: './app.component.html',
 })
-export class AppComponent implements OnInit {
-  loading$: Observable<boolean>;
+export class AppComponent {
 
-  @Input()
-  detectRouteTransitions = false;
-
-  constructor(
-    private loadingService: LoadingService,
-    private router: Router
-  ) {
-    this.loading$ = this.loadingService.loading$;
-  }
-
-  ngOnInit() {
-    if (this.detectRouteTransitions) {
-      this.router.events
-        .pipe(
-          tap((event) => {
-            if (event instanceof RouteConfigLoadStart) {
-              this.loadingService.loadingOn();
-            } else if (event instanceof RouteConfigLoadEnd) {
-              this.loadingService.loadingOff();
-            }
-          })
-        )
-        .subscribe();
-    }
-  }
 }
