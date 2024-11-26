@@ -1,0 +1,23 @@
+<hlm-tabs tab="sent" class="w-full">
+  <hlm-tabs-list class="w-full grid grid-cols-2" aria-label="tabs example">
+    <button (click)="fetchSentAdoptions()" hlmTabsTrigger="sent"><hlm-icon size="sm" name="lucideArrowUpRight" class="me-2"></hlm-icon> Enviadas</button>
+    <button (click)="fetchReceivedAdoptions()" hlmTabsTrigger="received"><hlm-icon size="sm" name="lucideArrowDownLeft" class="me-2"></hlm-icon> Recibidas</button>
+  </hlm-tabs-list>
+  <div hlmTabsContent="sent">
+    <div class="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-[repeat(auto-fit,minmax(380px,1fr))] gap-5 md:gap-20 mt-14" *ngIf="requests.length > 0; else noRequests">
+      <app-request-card class="justify-self-center" *ngFor="let request of requests" [request]="request" mode="sent"/>
+    </div>
+  </div>
+  <div hlmTabsContent="received">
+    <div class="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-[repeat(auto-fit,minmax(380px,1fr))] gap-5 md:gap-20 mt-14" *ngIf="requests.length > 0; else noRequests">
+      <app-request-card class="justify-self-center" *ngFor="let request of requests" [request]="request"> </app-request-card>
+    </div>
+  </div>
+</hlm-tabs>
+
+<ng-template #noRequests>
+  <div class="flex flex-col justify-center items-center mx-auto w-1/3">
+    <img src="/sad_dog.png" alt="Imagen de perro triste">
+    <h2 hlmH2 class="text-center">No has recibido solicitudes de adopción </h2>
+  </div>
+</ng-template>
