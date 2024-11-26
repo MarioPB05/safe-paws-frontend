@@ -63,8 +63,6 @@ export class CreateAdoptionPageComponent implements OnInit {
   private enumService = inject(EnumService);
 
   shouldResetMap = false;
-  previewUrl: string | ArrayBuffer | null = '';
-  showPreview = false;
 
   form = this._formBuilder.group({
     name: ['', Validators.required],
@@ -103,22 +101,6 @@ export class CreateAdoptionPageComponent implements OnInit {
   resetLocation() {
     this.shouldResetMap = true;
     setTimeout(() => this.shouldResetMap = false, 0);
-  }
-
-  onFileSelected(event: Event): void {
-    const input = event.target as HTMLInputElement;
-
-    if (input.files && input.files[0]) {
-      const file = input.files[0];
-      const reader = new FileReader();
-
-      reader.onload = () => {
-        this.previewUrl = reader.result;
-        this.showPreview = true;
-      };
-
-      reader.readAsDataURL(file);
-    }
   }
 
   getFormValues() {
