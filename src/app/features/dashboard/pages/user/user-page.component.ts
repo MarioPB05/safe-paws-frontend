@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {PetCardComponent} from '@dashboard/components/pet-card/pet-card.component';
 import {HlmH2Directive} from '@spartan-ng/ui-typography-helm';
 import {HlmInputDirective} from '@spartan-ng/ui-input-helm';
@@ -9,6 +9,8 @@ import {toast} from 'ngx-sonner';
 import {EditUser, User} from '@core/models/user.model';
 import {EditClient} from '@core/models/client.model';
 import {ImageUploaderComponent} from '@shared/components/image-uploader/image-uploader.component';
+import {BehaviorSubject} from 'rxjs';
+import {AsyncPipe, NgIf} from '@angular/common';
 
 @Component({
   selector: 'app-user-page',
@@ -19,22 +21,15 @@ import {ImageUploaderComponent} from '@shared/components/image-uploader/image-up
     HlmInputDirective,
     ReactiveFormsModule,
     HlmButtonDirective,
-    ImageUploaderComponent
+    ImageUploaderComponent,
+    AsyncPipe,
+    NgIf
   ],
   templateUrl: './user-page.component.html',
 })
-export class UserPageComponent {
+export class UserPageComponent implements OnInit {
 
-  user: User = {
-    username: '',
-    email: '',
-    client: {
-      name: '',
-      surname: '',
-      dni: '',
-      photo: ''
-  }
-  };
+  user$ = new BehaviorSubject<User | null>(null);
 
   private _formBuilder = inject(FormBuilder);
 
@@ -58,18 +53,14 @@ export class UserPageComponent {
   fetchUserData(): void {
     this.userService.getAuthenticatedUser().subscribe({
       next: (user) => {
-        this.user = user;
-        console.log('Usuario cargado exitosamente:', this.user);
+        this.user$.next(user);
       },
-      error: (err) => {
-        console.error('Error al cargar los datos del usuario:', err);
-      }
+      error: () => toast.error('Error al obtener tus datos')
     });
   }
 
   imageSelected(file: File) {
     this.image = file;
-    console.log(file)
   }
 
   onSubmit() {
@@ -100,26 +91,18 @@ export class UserPageComponent {
 
       this.userService.editClient(formData).subscribe({
         next: (updatedUser) => {
-          this.user.username = updatedUser.username;
-          this.user.email = updatedUser.email;
-          this.user.client.name = updatedUser.client.name;
-          this.user.client.surname = updatedUser.client.surname;
-          this.user.client.dni = updatedUser.client.dni;
-          this.user.client.photo = updatedUser.client.photo;
+          this.user$.next(updatedUser);
 
           toast.success("Usuario Editado correctamente");
-          this.form.reset()
+
+          this.form.reset();
         },
-        error: (error) => {
-          console.log(JSON.stringify(editUser));
-          console.error('Error al editar el usuario:', error);
-        },
-        complete: () => {
-          this.isSubmitting = false;
-        },
+        error: () => toast.error('Error al editar el usuario'),
+        complete: () => this.isSubmitting = false
       });
     } else {
-      console.error('Formulario inválido');
+      toast.error('Revisa los campos del formulario');
+
       this.isSubmitting = false;
     }
   }
