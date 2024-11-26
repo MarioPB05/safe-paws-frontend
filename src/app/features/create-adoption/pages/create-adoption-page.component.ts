@@ -24,6 +24,7 @@ import {BrnSheetContentDirective, BrnSheetTriggerDirective} from '@spartan-ng/ui
 import {toast} from 'ngx-sonner';
 import { EnumService } from '@core/services/enum.service';
 import {AnimalType} from '@core/models/enums';
+import {ImageUploaderComponent} from '@shared/components/image-uploader/image-uploader.component';
 
 @Component({
   selector: 'app-create-adoption.page',
@@ -51,7 +52,8 @@ import {AnimalType} from '@core/models/enums';
     HlmSheetDescriptionDirective,
     HlmPDirective,
     HlmUlDirective,
-    NgForOf
+    NgForOf,
+    ImageUploaderComponent
   ],
   providers: [provideIcons({ lucideChevronUp, lucideChevronDown })],
   templateUrl: './create-adoption-page.component.html'
@@ -70,6 +72,7 @@ export class CreateAdoptionPageComponent implements OnInit {
     description: ['', Validators.required],
     address: [{ value: '', disabled: true }, Validators.required]
   });
+  image: File | null = null;
   isSubmitting = false;
 
   animalTypes: AnimalType[] = [];
@@ -110,6 +113,10 @@ export class CreateAdoptionPageComponent implements OnInit {
     const address = this.form.get('address')?.value;
 
     return { name, type, description, address };
+  }
+
+  imageSelected(file: File) {
+    this.image = file;
   }
 
   verifyForm() {
