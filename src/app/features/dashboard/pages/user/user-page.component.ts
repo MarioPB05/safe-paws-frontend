@@ -4,7 +4,6 @@ import {HlmH2Directive} from '@spartan-ng/ui-typography-helm';
 import {HlmInputDirective} from '@spartan-ng/ui-input-helm';
 import {FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
 import {HlmButtonDirective} from '@spartan-ng/ui-button-helm';
-import {HttpClient} from '@angular/common/http';
 import { UserService} from '@dashboard/services/user.service';
 import {toast} from 'ngx-sonner';
 import {EditUser, User} from '@core/models/user.model';
@@ -38,8 +37,8 @@ export class UserPageComponent {
   };
 
   private _formBuilder = inject(FormBuilder);
-  constructor(private userService: UserService, private http: HttpClient) {
-  }
+
+  constructor(private userService: UserService) {}
 
   form = this._formBuilder.group({
     username:["",  Validators.maxLength(10)],
@@ -51,7 +50,6 @@ export class UserPageComponent {
 
   image: File | null = null;
   isSubmitting = false;
-
 
   ngOnInit(): void {
     this.fetchUserData();
@@ -78,12 +76,7 @@ export class UserPageComponent {
     this.isSubmitting = true;
     const { username, email, name, surname, dni} = this.form.value;
 
-
-
-
     if (this.form.valid) {
-
-
       const editClient: EditClient = {
         name: name,
         surname: surname,
@@ -130,56 +123,5 @@ export class UserPageComponent {
       this.isSubmitting = false;
     }
   }
-
-
-
-
-
-
-
-
-  // clientForm:FormGroup;
-
-  // modificarSoli(): Observable<any> {
-  //   const clientData = this.clientForm.value; // Obtener datos del formulario
-  //   console.log(clientData); // Para depuración
-  //   return this.http.put(this.baseUrl, clientData); // Realizar solicitud HTTP PUT
-  // }
-  //
-  // constructor(private fb: FormBuilder,private http: HttpClient) {
-  //   this.clientForm = this.fb.group({
-  //     id: ['', Validators.required], // ID oculto en el formulario si es necesario
-  //     name: ['', [Validators.required, Validators.minLength(2)]],
-  //     surname: ['', [Validators.required, Validators.minLength(2)]],
-  //     birthdate: ['', Validators.required],
-  //     dni: ['', [Validators.required, Validators.minLength(8)]],
-  //     address: ['', Validators.required],
-  //   });
-  // }
-  // onSubmit() {
-  //   if (this.clientForm.valid) {
-  //     this.modificarSoli().subscribe(
-  //       (response) => {
-  //         this.successMessage = 'Los datos del cliente se actualizaron correctamente.';
-  //         this.errorMessage = '';
-  //         console.log(response); // Opcional: verificar la respuesta
-  //       },
-  //       (error) => {
-  //         this.errorMessage = 'Hubo un error al actualizar los datos del cliente.';
-  //         this.successMessage = '';
-  //         console.error(error); // Mostrar el error en la consola
-  //       }
-  //     );
-  //   } else {
-  //     this.errorMessage = 'Por favor, completa todos los campos correctamente.';
-  //     this.successMessage = '';
-  //   }
-  // }
-
-
-
-
-
-
 
 }

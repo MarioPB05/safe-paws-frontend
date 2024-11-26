@@ -1,10 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {HlmH3Directive, HlmPDirective} from '@spartan-ng/ui-typography-helm';
+import {HlmH3Directive} from '@spartan-ng/ui-typography-helm';
 import {HlmButtonDirective} from '@spartan-ng/ui-button-helm';
 import {HlmIconComponent, provideIcons} from '@spartan-ng/ui-icon-helm';
 import {lucideCheck, lucideClock} from '@ng-icons/lucide';
-import {HttpClient} from '@angular/common/http';
-import {RouterOutlet} from '@angular/router';
 import {NgForOf, NgIf} from '@angular/common';
 import {GetPostResponse} from '@core/models/post.model';
 import {UserService} from '@dashboard/services/user.service';
@@ -14,7 +12,6 @@ import {UserService} from '@dashboard/services/user.service';
   standalone: true,
   imports: [
     HlmH3Directive,
-    HlmPDirective,
     HlmButtonDirective,
     HlmIconComponent,
     NgForOf,
@@ -30,8 +27,7 @@ export class PetCardComponent implements OnInit {
   loading = true;
   posts:GetPostResponse[]=[];
 
-  constructor(private userService: UserService, private http: HttpClient, private routerOutlet: RouterOutlet) {
-  }
+  constructor(private userService: UserService) {}
 
   ngOnInit():void {
     this.fetchClientPosts();
