@@ -1,7 +1,7 @@
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {catchError, Observable, throwError} from 'rxjs';
 import {Injectable} from '@angular/core';
-import {EditUser, User} from '@core/models/user.model';
+import {User} from '@core/models/user.model';
 import {GetPostResponse} from '@core/models/post.model';
 
 @Injectable({
@@ -16,7 +16,7 @@ export class UserService {
     return this.http.get<GetPostResponse[]>(`/api/adoptions/user`);
   }
 
-  editClient( editUser: any): Observable<User> {
+  editClient(editUser: FormData): Observable<User> {
     return this.http.put<User>(`/api/user/edit`, editUser);
   }
 
