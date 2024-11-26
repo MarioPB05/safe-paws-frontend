@@ -1,27 +1,7 @@
 <div class="grid grid-rows-[auto,1fr] xl:grid-cols-[auto,1fr] overflow-x-hidden xl:overflow-y-hidden w-screen h-screen">
   <div class="py-6 px-16 justify-self-center">
     <div class="flex flex-col items-center bg-primary-100 p-6 rounded-2xl shadow-lg max-w-[400px] border-4 border-primary-200">
-      <div class="size-[300px] rounded-full bg-primary-200 relative text-primary-400 group">
-        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-32">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5" />
-          </svg>
-          <span class="font-medium text-lg">Subir Imagen</span>
-        </div>
-
-        <div [class.group-hover:opacity-100]="showPreview"
-             [class.group-hover:scale-100]="showPreview"
-             class="absolute inset-0 flex-col items-center justify-center rounded-full bg-primary-400 text-white z-10 flex opacity-0 scale-90 transition-all">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-32">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5" />
-          </svg>
-          <span>Cambiar Imagen</span>
-        </div>
-
-        <img [class.hidden]="!showPreview" class="absolute inset-0 rounded-full bg-white size-full z-0" [src]="previewUrl" alt="Vista previa de la imagen">
-
-        <input (change)="onFileSelected($event)" type="file" class="absolute inset-0 opacity-0 cursor-pointer z-50" />
-      </div>
+      <app-image-uploader class="size-[300px]" (imageSelected)="imageSelected($event)" />
 
       <label hlmLabel class="mt-6 mb-2">Imagen del Animal</label>
       <p class="text-gray-400 text-balance text-center">Asegúrate de que la imagen sea clara y que se vea bien el animal.</p>
