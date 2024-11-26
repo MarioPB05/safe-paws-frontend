@@ -7,7 +7,7 @@ import {HttpClient} from '@angular/common/http';
 import {RouterOutlet} from '@angular/router';
 import {NgForOf, NgIf} from '@angular/common';
 import {GetPostResponse} from '@core/models/post.model';
-import {UserService} from '@dashboard/components/services/user.service';
+import {UserService} from '@dashboard/services/user.service';
 
 @Component({
   selector: 'app-pet-card',
