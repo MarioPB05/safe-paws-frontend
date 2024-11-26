@@ -4,8 +4,6 @@
       <img class="absolute size-full rounded-full z-0" [src]="request.postPhoto" alt="Imagen del perro"/>
       <div *ngIf="mode == 'sent'" [ngClass]="getStatusClass()" class="absolute top-1 right-1 rounded-full size-8 border-4 border-white"></div>
 
-      <hlm-icon *ngIf="mode == 'received'" class="relative bottom-36  text-primary " size="lg" name="lucideMessagesSquare"></hlm-icon>
-
       <span hlmBadge class="z-10">
           <hlm-icon *ngIf="mode == 'sent'" size="sm" name="lucideMapPin" class="me-2"></hlm-icon>
           <hlm-icon *ngIf="mode =='received' " size="sm" name="lucideCalendar" class="me-2"></hlm-icon>
