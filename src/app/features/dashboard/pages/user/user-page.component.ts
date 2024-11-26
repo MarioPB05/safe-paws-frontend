@@ -11,6 +11,7 @@ import {EditClient} from '@core/models/client.model';
 import {ImageUploaderComponent} from '@shared/components/image-uploader/image-uploader.component';
 import {BehaviorSubject} from 'rxjs';
 import {AsyncPipe, NgIf} from '@angular/common';
+import {HlmLabelDirective} from '@spartan-ng/ui-label-helm';
 
 @Component({
   selector: 'app-user-page',
@@ -23,7 +24,8 @@ import {AsyncPipe, NgIf} from '@angular/common';
     HlmButtonDirective,
     ImageUploaderComponent,
     AsyncPipe,
-    NgIf
+    NgIf,
+    HlmLabelDirective
   ],
   templateUrl: './user-page.component.html',
 })
