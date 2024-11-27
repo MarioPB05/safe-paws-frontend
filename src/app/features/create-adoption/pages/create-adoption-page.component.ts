@@ -1,7 +1,7 @@
 import {Component, inject, OnInit, ViewChild} from '@angular/core';
 import {MapComponent} from '@shared/components/map/map.component';
-import {Location} from '@core/models/map.model';
-import {NgClass, NgForOf} from '@angular/common';
+import {AddressRequest, Location} from '@core/models/map.model';
+import {NgForOf} from '@angular/common';
 import {HlmLabelDirective} from '@spartan-ng/ui-label-helm';
 import {HlmH1Directive, HlmH2Directive, HlmPDirective, HlmUlDirective} from '@spartan-ng/ui-typography-helm';
 import {HlmButtonDirective} from '@spartan-ng/ui-button-helm';
@@ -11,7 +11,6 @@ import {provideIcons} from '@ng-icons/core';
 import {BrnSelectImports} from '@spartan-ng/ui-select-brain';
 import { HlmSelectImports } from '@spartan-ng/ui-select-helm';
 import {lucideChevronDown, lucideChevronUp} from '@ng-icons/lucide';
-import {HlmCheckboxComponent} from '@spartan-ng/ui-checkbox-helm';
 import {
   HlmSheetComponent,
   HlmSheetContentComponent,
@@ -20,18 +19,20 @@ import {
   HlmSheetHeaderComponent,
   HlmSheetTitleDirective
 } from '@spartan-ng/ui-sheet-helm';
-import {BrnSheetContentDirective, BrnSheetTriggerDirective} from '@spartan-ng/ui-sheet-brain';
 import {toast} from 'ngx-sonner';
 import { EnumService } from '@core/services/enum.service';
 import {AnimalType} from '@core/models/enums';
 import {ImageUploaderComponent} from '@shared/components/image-uploader/image-uploader.component';
+import {CreatePostRequest} from '@core/models/post.model';
+import {BrnSheetContentDirective, BrnSheetTriggerDirective} from '@spartan-ng/ui-sheet-brain';
+import { AdoptionService } from '../services/adoption.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-adoption.page',
   standalone: true,
   imports: [
     MapComponent,
-    NgClass,
     HlmLabelDirective,
     HlmH1Directive,
     HlmH2Directive,
@@ -41,9 +42,8 @@ import {ImageUploaderComponent} from '@shared/components/image-uploader/image-up
     ReactiveFormsModule,
     BrnSelectImports,
     HlmSelectImports,
-    HlmCheckboxComponent,
-    BrnSheetTriggerDirective,
-    BrnSheetContentDirective,
+    BrnSheetTriggerDirective, // El IDE dice que no se usa, pero se usa en la plantilla
+    BrnSheetContentDirective, // El IDE dice que no se usa, pero se usa en la plantilla
     HlmSheetComponent,
     HlmSheetContentComponent,
     HlmSheetHeaderComponent,
@@ -63,6 +63,8 @@ export class CreateAdoptionPageComponent implements OnInit {
 
   private _formBuilder = inject(FormBuilder);
   private enumService = inject(EnumService);
+  private router = inject(Router);
+  private adoptionService = inject(AdoptionService);
 
   shouldResetMap = false;
 
@@ -73,6 +75,7 @@ export class CreateAdoptionPageComponent implements OnInit {
     address: [{ value: '', disabled: true }, Validators.required]
   });
   image: File | null = null;
+  address: AddressRequest | null = null;
   isSubmitting = false;
 
   animalTypes: AnimalType[] = [];
@@ -90,7 +93,18 @@ export class CreateAdoptionPageComponent implements OnInit {
 
     const address = location.address;
 
-    // this.address = `[${location.lat}, ${location.lon}] `;
+    this.address = {
+      coordinateX: Number(location.lat),
+      coordinateY: Number(location.lon),
+      road: address.road,
+      neighborhood: address.neighbourhood ?? null,
+      village: address.village ?? null,
+      province: address.province,
+      state: address.state,
+      postcode: address.postcode ?? null,
+      country: address.country,
+      countryCode: address.country_code
+    }
 
     if (address.road != undefined) addressInput += `${address.road}, `;
     if (address.postcode != undefined) addressInput += `${address.postcode}, `;
@@ -127,12 +141,6 @@ export class CreateAdoptionPageComponent implements OnInit {
       address: addressValue
     } = this.getFormValues();
 
-    if (this.form.valid && addressValue !== '') {
-      this.sheet.setSide = 'bottom';
-      this.sheet.open();
-      return;
-    }
-
     if (!nameValue && !typeValue && !descriptionValue && !addressValue) {
       toast.error('Por favor, rellena todos los campos');
       return;
@@ -143,7 +151,7 @@ export class CreateAdoptionPageComponent implements OnInit {
       return;
     }
 
-    if (!typeValue) {
+    if (typeValue === '' || typeValue === null || typeValue === undefined) {
       toast.error('Por favor, selecciona un tipo');
       return;
     }
@@ -157,20 +165,64 @@ export class CreateAdoptionPageComponent implements OnInit {
       toast.error('Por favor, selecciona una dirección');
       return;
     }
+
+    if (this.image === null) {
+      toast.error('Por favor, selecciona una imagen');
+      return;
+    }
+
+    if (this.form.valid && addressValue !== '') {
+      this.sheet.setSide = 'bottom';
+      this.sheet.open();
+      return;
+    }
   }
 
   onSubmit() {
     this.isSubmitting = true;
 
+    console.log(this.address);
+
+    if (this.address === null) {
+      toast.error('Por favor, selecciona una dirección');
+      this.isSubmitting = false;
+      return;
+    }
+
     if (this.form.valid) {
       const {
         name: nameValue,
         type: typeValue,
-        description: descriptionValue,
-        address: addressValue
-      } = this.getFormValues();
+        description: descriptionValue
+      } = this.getFormValues() as { name: string; type: string; description: string; };
 
-      console.log('Enviando datos:', { nameValue, typeValue, descriptionValue, addressValue });
+      const adoptionRequest: CreatePostRequest = {
+        name: nameValue,
+        description: descriptionValue,
+        typeId: Number(typeValue),
+        address: this.address
+      }
+
+      const formData = new FormData();
+
+      formData.append('dto', new Blob([JSON.stringify(adoptionRequest)], { type: 'application/json' }));
+      formData.append('file', this.image as Blob);
+
+      this.sheet.close(null);
+
+      this.adoptionService.createAdoption(formData).subscribe({
+        next: (adoptionId) => {
+          if (adoptionId === 0) {
+            toast.error('Error al crear la adopción, por favor, inténtalo de nuevo');
+            return;
+          }
+
+          this.router.navigate(['/dashboard']).then(r => toast.success('Adopción creada correctamente'));
+        },
+        error: () => {
+          toast.error('Error al crear la adopción, por favor, inténtalo de nuevo');
+        }
+      });
     }
 
     this.isSubmitting = false;
