@@ -22,6 +22,7 @@ export interface LocationError {
 
 export interface Address {
   road: string;
+  neighbourhood: string;
   village: string;
   province: string;
   ISO3166_2_lvl6: string;
@@ -30,4 +31,17 @@ export interface Address {
   postcode: string;
   country: string;
   country_code: string;
+}
+
+export interface AddressRequest {
+  coordinateX: number;
+  coordinateY: number;
+  road: string;
+  neighborhood: string | null;
+  village: string | null;
+  province: string;
+  state: string;
+  postcode: string | null;
+  country: string;
+  countryCode: string;
 }
