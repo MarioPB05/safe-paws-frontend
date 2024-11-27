@@ -1,12 +1,9 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {NgStyle} from '@angular/common';
 
 @Component({
   selector: 'app-image-uploader',
   standalone: true,
-  imports: [
-    NgStyle
-  ],
+  imports: [],
   templateUrl: './image-uploader.component.html'
 })
 export class ImageUploaderComponent implements OnInit {
@@ -21,7 +18,6 @@ export class ImageUploaderComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.defaultImage) {
-      console.log('defaultImage', this.defaultImage);
       this.previewUrl = this.defaultImage;
       this.showPreview = true;
     }
