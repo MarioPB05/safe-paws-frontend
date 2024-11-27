@@ -16,7 +16,7 @@
       </div>
       <h2 class="mb-6" hlmH2>Información del Animal</h2>
 
-      <form class="mb-6" [formGroup]="form" (ngSubmit)="onSubmit()" action="">
+      <form class="mb-6" [formGroup]="form" action="">
         <div class="flex flex-col md:flex-row items-center gap-6 mb-4">
           <label hlmLabel class="flex flex-col gap-2 w-full">
             Nombre
@@ -82,7 +82,7 @@
               <p hlmP>Al marcar la casilla, usted acepta y confirma haber leído estos términos, y da su consentimiento para proceder con la publicación.</p>
             </div>
             <hlm-sheet-footer>
-              <button hlmBtn type="submit">Crear Anuncio</button>
+              <button hlmBtn (click)="onSubmit()">Crear Anuncio</button>
             </hlm-sheet-footer>
           </hlm-sheet-content>
         </hlm-sheet>
