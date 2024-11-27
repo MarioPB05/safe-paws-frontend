@@ -6,6 +6,7 @@ import {lucideCheck, lucideClock} from '@ng-icons/lucide';
 import {NgForOf, NgIf} from '@angular/common';
 import {GetPostResponse} from '@core/models/post.model';
 import {UserService} from '@dashboard/services/user.service';
+import {toast} from 'ngx-sonner';
 
 @Component({
   selector: 'app-pet-card',
@@ -37,12 +38,9 @@ export class PetCardComponent implements OnInit {
     this.userService.getClientPosts().subscribe({
       next: (posts) => {
         this.posts = posts;
-        console.log(this.posts);
         this.loading = false;
       },
-      error: (err) => {
-        console.error('Error al cargar los posts:', err);
-      }
+      error: () => toast.error('Hubo un error al cargar tus mascotas')
     });
   }
 
