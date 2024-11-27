@@ -1,22 +1,27 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {NgStyle} from '@angular/common';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 
 @Component({
   selector: 'app-image-uploader',
   standalone: true,
-  imports: [
-    NgStyle
-  ],
+  imports: [],
   templateUrl: './image-uploader.component.html'
 })
-export class ImageUploaderComponent {
+export class ImageUploaderComponent implements OnInit {
   @Input() svgSize: string = 'size-32';
   @Input() textSize: string = 'text-lg';
+  @Input() defaultImage: string | null = null;
 
   @Output() imageSelected = new EventEmitter<File>();
 
   previewUrl: string | ArrayBuffer | null = '';
   showPreview = false;
+
+  ngOnInit(): void {
+    if (this.defaultImage) {
+      this.previewUrl = this.defaultImage;
+      this.showPreview = true;
+    }
+  }
 
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;

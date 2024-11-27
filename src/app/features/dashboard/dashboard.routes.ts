@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { DashboardPageComponent } from '@dashboard/pages/dashboard-page.component';
 import { AdoptionsPageComponent } from '@dashboard/pages/adoptions/adoptions-page.component';
 import {AdoptionRequestsComponent} from '@dashboard/pages/adoption-requests/adoption-requests.component';
+import {UserPageComponent} from '@dashboard/pages/user/user-page.component';
 
 const routes: Routes = [
   {
@@ -16,6 +17,10 @@ const routes: Routes = [
       {
         path: 'requests',
         component: AdoptionRequestsComponent
+      },
+      {
+        path: 'user',
+        component: UserPageComponent
       },
       {
         path: '',
