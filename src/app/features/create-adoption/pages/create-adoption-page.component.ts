@@ -94,8 +94,8 @@ export class CreateAdoptionPageComponent implements OnInit {
     const address = location.address;
 
     this.address = {
-      coordinateX: Number(location.lat),
-      coordinateY: Number(location.lon),
+      coordinateX: Number(location.lon),
+      coordinateY: Number(location.lat),
       road: address.road,
       neighborhood: address.neighbourhood ?? null,
       village: address.village ?? null,
