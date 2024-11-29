@@ -21,19 +21,19 @@ export class MapComponent implements AfterViewInit {
       this.resetMapView();
     }
   }
+  @Input() maxMarkers = 1; // 0 for unlimited markers
 
   @Output() locationUpdated = new EventEmitter<Location>();
+  @Output() boundsUpdated = new EventEmitter<L.LatLngBounds>();
 
   private map: L.Map | undefined;
-  private currentMarker: L.Marker | undefined;
+  private currentMarkers: L.Marker[] = [];
   private mapService = inject(MapService);
   private defaultLatitude = 37.3862458;
   private defaultLongitude = -5.9849204;
   private customIcon = L.icon({
     iconUrl: '/marker.png',
-    iconSize: [32, 32],
-    iconAnchor: [32, 32],
-    popupAnchor: [0, -32]
+    iconSize: [32, 32]
   });
   private loadingMarker = false;
 
@@ -70,11 +70,19 @@ export class MapComponent implements AfterViewInit {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     });
 
-    tiles.addTo(this.map);
+    tiles.addTo(this.map).on('load', () => this.emitBounds());
 
     if (this.interactive) {
       this.map.on('click', this.onMapClick.bind(this));
     }
+
+    this.map.on('moveend', () => this.emitBounds());
+  }
+
+  private emitBounds(): void {
+    const bounds = this.map?.getBounds().pad(0.2);
+
+    if (bounds != undefined) this.boundsUpdated.emit(bounds);
   }
 
   private onMapClick(event: L.LeafletMouseEvent): void {
@@ -83,42 +91,64 @@ export class MapComponent implements AfterViewInit {
     this.addMarker(lat, lng);
   }
 
-  private addMarker(latitude: number, longitude: number): void {
-    if (this.loadingMarker) {
+  public addMarker(latitude: number, longitude: number, callback: any=null): void {
+    if (this.loadingMarker && this.interactive) {
       return;
     }
 
     this.loadingMarker = true;
 
-    if (this.currentMarker) {
-      this.map?.removeLayer(this.currentMarker);
+    if (this.maxMarkers > 0 && this.currentMarkers.length > this.maxMarkers) {
+      this.currentMarkers.forEach(marker => this.map?.removeLayer(marker));
     }
 
-    this.mapService.getLocation(latitude, longitude).subscribe({
-      next: (location) => {
-        if ((location as LocationError).error) {
+    if (this.interactive) {
+      this.mapService.getLocation(latitude, longitude).subscribe({
+        next: (location) => {
+          if ((location as LocationError).error) {
+            toast.error('Error al obtener la ubicación.');
+            return;
+          }
+
+          location = location as Location;
+
+          if (location.address.country !== 'España') {
+            toast.error('Solo se permiten ubicaciones en España.');
+            return;
+          }
+
+          this.locationUpdated.emit(location);
+
+          this.currentMarkers.push(
+            L.marker([latitude, longitude], {icon: this.customIcon}).addTo(this.map!)
+          );
+        },
+        error: () => {
           toast.error('Error al obtener la ubicación.');
-          return;
+        },
+        complete: () => {
+          this.loadingMarker = false;
         }
+      });
+    }else {
+      this.currentMarkers.push(L.marker([latitude, longitude], {icon: this.customIcon}).addTo(this.map!));
+    }
 
-        location = location as Location;
+    if (callback) {
+      const lastMarker = this.currentMarkers[this.currentMarkers.length - 1];
 
-        if (location.address.country !== 'España') {
-          toast.error('Solo se permiten ubicaciones en España.');
-          return;
-        }
+      lastMarker.on('click', callback);
 
-        this.locationUpdated.emit(location);
+      lastMarker.bindTooltip('Ver detalles', {
+        permanent: false,
+        direction: 'bottom'
+      });
+    }
+  }
 
-        this.currentMarker = L.marker([latitude, longitude], { icon: this.customIcon }).addTo(this.map!);
-      },
-      error: () => {
-        toast.error('Error al obtener la ubicación.');
-      },
-      complete: () => {
-        this.loadingMarker = false;
-      }
-    });
+  public clearMarkers(): void {
+    this.currentMarkers.forEach(marker => this.map?.removeLayer(marker));
+    this.currentMarkers = [];
   }
 
   private resetMapView(): void {
