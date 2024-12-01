@@ -1,17 +1,16 @@
 import {AfterViewInit, Component, EventEmitter, inject, Input, Output} from '@angular/core';
 import * as L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import {NgStyle} from '@angular/common';
 import {toast} from 'ngx-sonner';
 import {MapService} from '@shared/services/map.service';
 import {Location, LocationError} from '@core/models/map.model';
 
+type Callback = (post: number) => void;
+
 @Component({
   selector: 'app-map',
   standalone: true,
-  imports: [
-    NgStyle
-  ],
+  imports: [],
   templateUrl: './map.component.html'
 })
 export class MapComponent implements AfterViewInit {
@@ -91,7 +90,7 @@ export class MapComponent implements AfterViewInit {
     this.addMarker(lat, lng);
   }
 
-  public addMarker(latitude: number, longitude: number, callback: any=null): void {
+  public addMarker(latitude: number, longitude: number, id: number|null = null, callback: Callback|null = null): void {
     if (this.loadingMarker && this.interactive) {
       return;
     }
@@ -134,10 +133,10 @@ export class MapComponent implements AfterViewInit {
       this.currentMarkers.push(L.marker([latitude, longitude], {icon: this.customIcon}).addTo(this.map!));
     }
 
-    if (callback) {
+    if (callback && id) {
       const lastMarker = this.currentMarkers[this.currentMarkers.length - 1];
 
-      lastMarker.on('click', callback);
+      lastMarker.on('click', callback.bind(null, id));
 
       lastMarker.bindTooltip('Ver detalles', {
         permanent: false,
@@ -149,6 +148,14 @@ export class MapComponent implements AfterViewInit {
   public clearMarkers(): void {
     this.currentMarkers.forEach(marker => this.map?.removeLayer(marker));
     this.currentMarkers = [];
+  }
+
+  public getCurrentBounds(): L.LatLngBounds {
+    if (!this.map) {
+      return L.latLngBounds([0, 0], [0, 0]);
+    }
+
+    return this.map.getBounds();
   }
 
   private resetMapView(): void {
