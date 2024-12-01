@@ -1,6 +1,6 @@
 <h2 class="mb-6 flex justify-between" hlmH2>
   Mapa de Adopciones
-  <button class="items-center group" hlmBtn variant="link">
+  <button (click)="refreshMap()" class="items-center group" hlmBtn variant="link">
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5 me-2 transition-transform duration-300 group-hover:rotate-180">
       <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
     </svg>
@@ -12,12 +12,4 @@
   <span *ngIf="isLoading" class="absolute z-40 bottom-0 right-0" hlmBadge>Cargando datos...</span>
 </app-map>
 
-<hlm-sheet #sheetComponent>
-  <button brnSheetTrigger>Edit Profile</button>
-  <hlm-sheet-content *brnSheetContent='let ctx'>
-    <hlm-sheet-header>
-      <h3 hlmSheetTitle>Edit Profile</h3>
-      <p hlmSheetDescription>Make changes to your profile here. Click save when you're done.</p>
-    </hlm-sheet-header>
-  </hlm-sheet-content>
-</hlm-sheet>
+<app-details-card />
