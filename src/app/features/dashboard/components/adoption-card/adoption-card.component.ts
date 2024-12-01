@@ -1,4 +1,4 @@
-import {Component, HostBinding, Input} from '@angular/core';
+import {Component, HostBinding, Input, ViewChild} from '@angular/core';
 import {HlmButtonDirective} from '@spartan-ng/ui-button-helm';
 import {HlmBadgeDirective} from '../../../../../libs/ui/ui-badge-helm/src';
 import {HlmH3Directive, HlmPDirective} from '@spartan-ng/ui-typography-helm';
@@ -6,6 +6,7 @@ import {HlmIconComponent} from '@spartan-ng/ui-icon-helm';
 import {provideIcons} from '@ng-icons/core';
 import {lucideMapPin} from '@ng-icons/lucide';
 import {AdoptionAvailable} from '@core/models/adoption.model';
+import {DetailsCardComponent} from '@dashboard/components/details-card/details-card.component';
 
 @Component({
   selector: 'app-adoption-card',
@@ -15,7 +16,8 @@ import {AdoptionAvailable} from '@core/models/adoption.model';
     HlmBadgeDirective,
     HlmH3Directive,
     HlmPDirective,
-    HlmIconComponent
+    HlmIconComponent,
+    DetailsCardComponent
   ],
   templateUrl: './adoption-card.component.html',
   providers: [provideIcons({ lucideMapPin })]
@@ -23,6 +25,16 @@ import {AdoptionAvailable} from '@core/models/adoption.model';
 export class AdoptionCardComponent {
   @HostBinding('class') hostClass = 'min-h-[300px] min-w-[280px] mt-20';
   @Input() adoption!: AdoptionAvailable;
+  @ViewChild(DetailsCardComponent) detailsCard!: DetailsCardComponent;
+
+  openDetails(): void {
+    this.detailsCard.showPostDetails(this.adoption.id);
+  }
+
+  redirectToAdoptionForm($event: MouseEvent): void {
+    $event.stopPropagation();
+    // TODO: Implement redirection to adoption form
+  }
 
   truncateText(text: string, maxLength: number): string {
     if (!text) return '';
