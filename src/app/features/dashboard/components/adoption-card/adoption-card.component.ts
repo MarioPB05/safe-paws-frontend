@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, HostBinding, Input} from '@angular/core';
 import {HlmButtonDirective} from '@spartan-ng/ui-button-helm';
 import {HlmBadgeDirective} from '../../../../../libs/ui/ui-badge-helm/src';
 import {HlmH3Directive, HlmPDirective} from '@spartan-ng/ui-typography-helm';
@@ -21,6 +21,7 @@ import {AdoptionAvailable} from '@core/models/adoption.model';
   providers: [provideIcons({ lucideMapPin })]
 })
 export class AdoptionCardComponent {
+  @HostBinding('class') hostClass = 'min-h-[300px] min-w-[280px] mt-20';
   @Input() adoption!: AdoptionAvailable;
 
   truncateText(text: string, maxLength: number): string {

@@ -4,6 +4,7 @@ import { DashboardPageComponent } from '@dashboard/pages/dashboard-page.componen
 import { AdoptionsPageComponent } from '@dashboard/pages/adoptions/adoptions-page.component';
 import {AdoptionRequestsComponent} from '@dashboard/pages/adoption-requests/adoption-requests.component';
 import {UserPageComponent} from '@dashboard/pages/user/user-page.component';
+import {MapPageComponent} from '@dashboard/pages/map/map-page.component';
 
 const routes: Routes = [
   {
@@ -21,6 +22,10 @@ const routes: Routes = [
       {
         path: 'user',
         component: UserPageComponent
+      },
+      {
+        path: 'map',
+        component: MapPageComponent
       },
       {
         path: '',
