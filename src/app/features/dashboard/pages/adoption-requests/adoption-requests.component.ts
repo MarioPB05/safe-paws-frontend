@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import {Component, HostBinding, OnInit} from '@angular/core';
 import { RequestCardComponent } from '@dashboard/components/request-card/request-card.component';
 import {
   HlmTabsComponent,
@@ -12,7 +12,7 @@ import { Request } from '@core/models/request.model';
 import {HlmIconComponent} from '@spartan-ng/ui-icon-helm';
 import {provideIcons} from '@ng-icons/core';
 import {lucideCalendar, lucideEye, lucideMapPin, lucideUser2, lucideArrowUpRight, lucideArrowDownLeft} from '@ng-icons/lucide';
-import {HlmH2Directive, HlmH3Directive} from '@spartan-ng/ui-typography-helm';
+import {HlmH2Directive} from '@spartan-ng/ui-typography-helm';
 
 @Component({
   selector: 'app-adoption-requests',
@@ -20,7 +20,6 @@ import {HlmH2Directive, HlmH3Directive} from '@spartan-ng/ui-typography-helm';
   imports: [
     CommonModule,
     RequestCardComponent,
-    HlmH3Directive,
     HlmH2Directive,
     HlmTabsComponent,
     HlmTabsListComponent,
@@ -32,7 +31,9 @@ import {HlmH2Directive, HlmH3Directive} from '@spartan-ng/ui-typography-helm';
   providers: [provideIcons({ lucideMapPin, lucideUser2 , lucideCalendar, lucideEye, lucideArrowUpRight, lucideArrowDownLeft})]
 })
 export class AdoptionRequestsComponent implements OnInit   {
+  @HostBinding('class') class = 'block w-full';
   requests: Request[] = [];
+  currentTab: 'sent' | 'received' = 'sent';
 
   constructor(
     private requestService: RequestService,
@@ -43,6 +44,7 @@ export class AdoptionRequestsComponent implements OnInit   {
   }
 
   fetchReceivedAdoptions() {
+    this.currentTab = 'received';
     this.requestService.getReceivedAdoptions().subscribe({
       next: (requests) => {
         this.requests = requests;
@@ -51,6 +53,7 @@ export class AdoptionRequestsComponent implements OnInit   {
   }
 
   fetchSentAdoptions() {
+    this.currentTab = 'sent';
     this.requestService.getSentAdoptions().subscribe({
       next: (requests) => {
         this.requests = requests;
