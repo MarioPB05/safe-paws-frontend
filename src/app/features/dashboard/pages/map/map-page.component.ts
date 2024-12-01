@@ -1,7 +1,7 @@
 import {Component, HostBinding, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MapComponent} from '@shared/components/map/map.component';
 import {DashboardService} from '@dashboard/services/dashboard.service';
-import {HlmH1Directive, HlmH2Directive, HlmH3Directive} from '@spartan-ng/ui-typography-helm';
+import {HlmH2Directive} from '@spartan-ng/ui-typography-helm';
 import {HlmButtonDirective} from '@spartan-ng/ui-button-helm';
 import * as L from 'leaflet';
 import {MapPostRequest} from '@core/models/post.model';
@@ -9,40 +9,26 @@ import {MapService} from '@dashboard/services/map.service';
 import {debounceTime, Subject, switchMap} from 'rxjs';
 import {NgIf} from '@angular/common';
 import {HlmBadgeDirective} from '../../../../../libs/ui/ui-badge-helm/src';
-import {BrnSheetContentDirective, BrnSheetTriggerDirective} from '@spartan-ng/ui-sheet-brain';
-import {
-  HlmSheetComponent,
-  HlmSheetContentComponent, HlmSheetDescriptionDirective,
-  HlmSheetFooterComponent,
-  HlmSheetHeaderComponent, HlmSheetTitleDirective
-} from '@spartan-ng/ui-sheet-helm';
+import {DetailsCardComponent} from '@dashboard/components/details-card/details-card.component';
+import {toast} from 'ngx-sonner';
 
 @Component({
   selector: 'app-map-page',
   standalone: true,
   imports: [
     MapComponent,
-    HlmH1Directive,
     HlmH2Directive,
     HlmButtonDirective,
-    HlmH3Directive,
     NgIf,
     HlmBadgeDirective,
-    BrnSheetTriggerDirective, // El IDE dice que no se usa, pero se usa en la plantilla
-    BrnSheetContentDirective, // El IDE dice que no se usa, pero se usa en la plantilla
-    HlmSheetComponent,
-    HlmSheetContentComponent,
-    HlmSheetHeaderComponent,
-    HlmSheetFooterComponent,
-    HlmSheetTitleDirective,
-    HlmSheetDescriptionDirective,
+    DetailsCardComponent,
   ],
   templateUrl: './map-page.component.html'
 })
 export class MapPageComponent implements OnInit, OnDestroy {
   @HostBinding('class') hostClass = 'flex-1 flex flex-col h-full w-full';
   @ViewChild(MapComponent) mapComponent!: MapComponent;
-  @ViewChild('sheetComponent') sheet!: HlmSheetComponent;
+  @ViewChild(DetailsCardComponent) detailsCardComponent!: DetailsCardComponent;
 
   private reloadMapSubject = new Subject<L.LatLngBounds>();
   private readonly debounceTimeInMs = 500;
@@ -74,16 +60,11 @@ export class MapPageComponent implements OnInit, OnDestroy {
       this.mapComponent.clearMarkers();
 
       response.forEach(post => {
-        this.mapComponent.addMarker(post.latitude, post.longitude, () => this.openSheet());
+        this.mapComponent.addMarker(post.latitude, post.longitude, post.postId, this.detailsCardComponent.showPostDetails.bind(this.detailsCardComponent));
       });
 
       this.isLoading = false;
     });
-  }
-
-  openSheet(): void {
-    this.sheet.setSide = 'bottom';
-    this.sheet.open();
   }
 
   ngOnInit(): void {
@@ -94,8 +75,12 @@ export class MapPageComponent implements OnInit, OnDestroy {
     this.dashboardService.addCustomClass('min-h-screen');
   }
 
-  // Método que se llama cuando el mapa se mueve o cambia
   reloadMap(bounds: L.LatLngBounds): void {
     this.reloadMapSubject.next(bounds);
+  }
+
+  refreshMap() {
+    toast.info('Se ha recargado el mapa');
+    this.reloadMapSubject.next(this.mapComponent.getCurrentBounds());
   }
 }
