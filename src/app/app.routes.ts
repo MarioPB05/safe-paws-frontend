@@ -16,5 +16,5 @@ export const routes: Routes = [
     canActivate: [authGuard],
   },
   { path: 'new/adoption', component: CreateAdoptionPageComponent, canActivate: [authGuard]},
-  { path: 'adoption/form', component: AdoptionFormPageComponent, canActivate: [authGuard]},
+  { path: 'adoption/:id/form', component: AdoptionFormPageComponent, canActivate: [authGuard]},
 ];
