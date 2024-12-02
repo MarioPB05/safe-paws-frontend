@@ -19,7 +19,6 @@ import {NgIf} from '@angular/common';
 import {MapComponent} from '@shared/components/map/map.component';
 import {AuthService} from '@features/auth/services/register.service';
 import {HlmLabelDirective} from '@spartan-ng/ui-label-helm';
-import {Location} from '@core/models/map.model';
 
 
 @Component({
@@ -39,6 +38,7 @@ import {Location} from '@core/models/map.model';
     ImageUploaderComponent,
     NgIf,
     MapComponent,
+    HlmLabelDirective,
 
 
   ],
@@ -101,6 +101,13 @@ export class RegisterComponent {
     this.showConfirmPassword = !this.showConfirmPassword;
   }
 
+  goToTab1($event: Event) {
+    $event.preventDefault();
+    const tabTrigger = document.querySelector('[hlmTabsTrigger="step-1"]') as HTMLElement;
+    if (tabTrigger) {
+      tabTrigger.click();
 
+    }
 
+  }
 }
