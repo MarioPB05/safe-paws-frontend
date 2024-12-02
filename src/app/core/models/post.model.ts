@@ -22,3 +22,19 @@ export interface CreatePostRequest {
   typeId: number;
   address: AddressRequest;
 }
+
+interface Coordinate {
+  latitude: number;
+  longitude: number;
+}
+
+export interface MapPostRequest {
+  southWest: Coordinate;
+  northEast: Coordinate;
+}
+
+export interface MapPostResponse {
+  latitude: number;
+  longitude: number;
+  postId: number;
+}

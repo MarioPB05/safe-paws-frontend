@@ -1,4 +1,4 @@
-<div class="relative border-4 border-primary rounded-3xl w-[210px] sm:w-[280px] h-full max-h-[300px] flex flex-col items-center m-5 mt-20 pt-[110px] pb-6 px-6">
+<div (click)="openDetails()" class="relative border-4 border-primary rounded-3xl w-[280px] h-full max-h-[300px] flex flex-col items-center pt-[110px] pb-6 px-6 transition-all hover:shadow-2xl hover:scale-105 cursor-pointer">
   <div class="absolute flex flex-col items-end top-[-35%] left-1/2 transform -translate-x-1/2 sm:size-[200px] size-[170px] rounded-full border-4 border-primary bg-white">
     <img class="size-full rounded-full" [src]="adoption.photo">
     <div class="w-full flex justify-center absolute -bottom-2 mx-auto -mt-4">
@@ -13,6 +13,8 @@
   <p hlmP class="text-gray-500 text-center line-clamp-2" style="margin-top: 0 !important;">{{ truncateText(adoption.description, 70) }}</p>
 
   <div class="flex-grow flex items-end">
-    <button hlmBtn>Adoptar Ahora</button>
+    <button hlmBtn (click)="redirectToAdoptionForm($event)">Adoptar Ahora</button>
   </div>
 </div>
+
+<app-details-card />
