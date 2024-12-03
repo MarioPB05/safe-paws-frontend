@@ -8,7 +8,6 @@ import {SkipAuth} from '@core/interceptors/auth.interceptor';
   providedIn: 'root'
 })
 export class AuthService {
-
   constructor(private http: HttpClient) {}
 
   login(username: string, password: string): Observable<AuthResponse> {
@@ -17,4 +16,11 @@ export class AuthService {
     });
   }
 
+  register(registerRequest: FormData): Observable<string> {
+    return this.http.post<string>(`/api/auth/register`, registerRequest, {
+      context: new HttpContext().set(SkipAuth, true)
+    });
+  }
+
 }
+
