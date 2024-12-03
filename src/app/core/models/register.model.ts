@@ -1,4 +1,4 @@
-export class register {
+export class RegisterRequest {
   username!: string;
   password!: string;
   email!: string;
@@ -6,16 +6,14 @@ export class register {
   surname!: string;
   dni!: string;
   birthdate!: string;
-  photo!: string;
   coordinateX!: number;
   coordinateY!: number;
   road!: string;
-  neighborhood!: string;
-  village!: string;
+  neighborhood!: string | null;
+  village!: string | null;
   province!: string;
   state!: string;
-  postcode!: string;
+  postcode!: string | null;
   country!: string;
   countryCode!: string;
-
 }
