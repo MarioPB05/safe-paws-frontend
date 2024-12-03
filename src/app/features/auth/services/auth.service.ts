@@ -16,8 +16,8 @@ export class AuthService {
     });
   }
 
-  register(registerRequest: FormData): Observable<string> {
-    return this.http.post<string>(`/api/auth/register`, registerRequest, {
+  register(registerRequest: FormData): Observable<AuthResponse> {
+    return this.http.post<AuthResponse>(`/api/auth/register`, registerRequest, {
       context: new HttpContext().set(SkipAuth, true)
     });
   }

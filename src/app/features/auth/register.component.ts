@@ -7,7 +7,6 @@ import {
   HlmTabsTriggerDirective
 } from '@spartan-ng/ui-tabs-helm';
 import {HlmH2Directive} from '@spartan-ng/ui-typography-helm';
-import {AuthService} from '@features/auth/services/auth.service';
 import {
   AbstractControl,
   FormBuilder,
@@ -28,6 +27,8 @@ import {AddressRequest, Location} from '@core/models/map.model';
 import {toast} from 'ngx-sonner';
 import {RegisterRequest} from '@core/models/register.model';
 import {Router} from '@angular/router';
+import { AuthService } from './services/auth.service';
+import { AuthService as GlobalAuthService } from '@core/services/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -58,6 +59,7 @@ export class RegisterComponent {
   private _formBuilder = inject(FormBuilder);
   private registerService = inject(AuthService);
   private router = inject(Router);
+  private _globalAuthService = inject(GlobalAuthService);
 
 
 
@@ -150,8 +152,9 @@ export class RegisterComponent {
       }
 
       this.registerService.register(formData).subscribe({
-        next: () => {
-          this.router.navigate(['/login']).then(() => toast.success('Registro exitoso, por favor, inicia sesión'));
+        next: (authResponse) => {
+          this._globalAuthService.setToken(authResponse.token);
+          this.router.navigate(['/dashboard']).then(() => toast.success('Registro exitoso'));
         }
       });
 
