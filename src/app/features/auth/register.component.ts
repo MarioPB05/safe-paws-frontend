@@ -51,8 +51,6 @@ import { AuthService as GlobalAuthService } from '@core/services/auth.service';
   ],
   templateUrl: './register.component.html',
   providers: [provideIcons({lucideEye, lucideEyeOff,lucideBadgeInfo})]
-
-
 })
 export class RegisterComponent {
 
@@ -60,8 +58,6 @@ export class RegisterComponent {
   private registerService = inject(AuthService);
   private router = inject(Router);
   private _globalAuthService = inject(GlobalAuthService);
-
-
 
   form = this._formBuilder.group({
     username: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
@@ -92,6 +88,7 @@ export class RegisterComponent {
       return age >= minAge ? null : { minimumAge: { requiredAge: minAge, actualAge: age } };
     };
   }
+
   getFormValues() {
     const username = this.form.get('username')?.value!;
     const password = this.form.get('password')?.value!;
@@ -102,15 +99,12 @@ export class RegisterComponent {
     const address = this.form.get('address')?.value!;
     const birthdate = this.form.get('birthdate')?.value!;
 
-
     return { username, password, email, name, dni, surname, address, birthdate };
   }
 
   imageSelected(file: File) {
     this.photo  = file;
   }
-
-
 
   onRegister() {
     this.isSubmitting = true;
@@ -158,7 +152,7 @@ export class RegisterComponent {
         }
       });
 
-      toast('Registrando usuario...');
+      toast.info('Registrando usuario...');
     } else {
       toast.error('Por favor, rellena todos los campos');
     }
@@ -192,7 +186,6 @@ export class RegisterComponent {
     this.form.get('address')?.setValue(addressInput);
   }
 
-
   showPassword: boolean = false;
   showConfirmPassword: boolean = false;
 
@@ -212,6 +205,7 @@ export class RegisterComponent {
 
     }
   }
+
   goToTab2(event: Event): void {
     event.preventDefault();
     const tabTrigger = document.querySelector('[hlmTabsTrigger="step-2"]') as HTMLElement;
@@ -219,7 +213,8 @@ export class RegisterComponent {
       tabTrigger.click();
     }
   }
-  displayToast(event: Event): void {
+
+  displayToast(): void {
     toast.info('La edad mínima es de 18 años');
   }
 
