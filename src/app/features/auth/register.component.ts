@@ -121,7 +121,6 @@ export class RegisterComponent {
 
     if (this.form.valid) {
       const formValues = this.getFormValues();
-      console.log('Form Values:', formValues);
 
       const registerRequest: RegisterRequest = {
         username: formValues.username,
@@ -150,23 +149,9 @@ export class RegisterComponent {
         formData.append('file', this.photo);
       }
 
-      // Log the FormData contents
-      formData.forEach((value, key) => {
-        if (key === 'dto') {
-          const reader = new FileReader();
-          reader.onload = () => {
-            console.log(`${key}:`, reader.result);
-          };
-          reader.readAsText(value as Blob);
-        } else {
-          console.log(`${key}:`, value);
-        }
-      });
-
       this.registerService.register(formData).subscribe({
         next: () => {
           this.router.navigate(['/login']).then(() => toast.success('Registro exitoso, por favor, inicia sesión'));
-
         }
       });
 
