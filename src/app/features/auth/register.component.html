@@ -1,7 +1,7 @@
 <div class="relative w-screen h-screen bg-[url('/auth_bg.png')] bg-no-repeat bg-cover">
   <div class="absolute inset-0 bg-white bg-opacity-80"></div>
-  <div class="absolute w-screen pt-2 max-sm:px-4">
-    <img src="/full_logo.png" class="max-w-fit w-full mx-auto" alt="Logotipo de Safe Paws">
+  <div class="absolute w-screen pt-2 max-sm:px-4 z-10">
+    <img (click)="redirectToHomePage()" src="/full_logo.png" class="max-w-fit w-full mx-auto cursor-pointer" alt="Logotipo de Safe Paws">
   </div>
 
   <!-- Contenido principal -->
@@ -10,10 +10,11 @@
       <hlm-tabs tab="step-1" class="w-[90%]">
         <div class="text-center">
           <h2 hlmH2>Registro</h2>
+          <p hlmP class="mb-4 text-gray-500" style="margin-top: 8px;">¿Ya tienes una cuenta? <a href="/login" class="text-primary">Iniciar sesión</a></p>
         </div>
         <hlm-tabs-list class="w-[60%] mx-auto grid grid-cols-2 mt-2" aria-label="tabs example">
           <button hlmTabsTrigger="step-1">1</button>
-          <button hlmTabsTrigger="step-2">2</button>
+          <button (click)="this.map.reinitializeMap()" hlmTabsTrigger="step-2">2</button>
         </hlm-tabs-list>
         <form [formGroup]="form" action="">
           <!-- Paso 1 -->
