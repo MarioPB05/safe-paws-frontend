@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, ViewChild} from '@angular/core';
 import {HlmIconComponent} from '@spartan-ng/ui-icon-helm';
 import {
   HlmTabsComponent,
@@ -6,7 +6,7 @@ import {
   HlmTabsListComponent,
   HlmTabsTriggerDirective
 } from '@spartan-ng/ui-tabs-helm';
-import {HlmH2Directive} from '@spartan-ng/ui-typography-helm';
+import {HlmH2Directive, HlmPDirective} from '@spartan-ng/ui-typography-helm';
 import {
   AbstractControl,
   FormBuilder,
@@ -33,26 +33,29 @@ import { AuthService as GlobalAuthService } from '@core/services/auth.service';
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [
-    HlmIconComponent,
-    HlmTabsComponent,
-    HlmTabsContentDirective,
-    HlmTabsListComponent,
-    HlmTabsTriggerDirective,
-    ReactiveFormsModule,
-    HlmFormFieldComponent,
-    HlmInputDirective,
-    HlmButtonDirective,
-    HlmH2Directive,
-    ImageUploaderComponent,
-    NgIf,
-    MapComponent,
-    HlmHintDirective
-  ],
+    imports: [
+        HlmIconComponent,
+        HlmTabsComponent,
+        HlmTabsContentDirective,
+        HlmTabsListComponent,
+        HlmTabsTriggerDirective,
+        ReactiveFormsModule,
+        HlmFormFieldComponent,
+        HlmInputDirective,
+        HlmButtonDirective,
+        HlmH2Directive,
+        ImageUploaderComponent,
+        NgIf,
+        MapComponent,
+        HlmHintDirective,
+        HlmPDirective
+    ],
   templateUrl: './register.component.html',
   providers: [provideIcons({lucideEye, lucideEyeOff,lucideBadgeInfo})]
 })
 export class RegisterComponent {
+
+  @ViewChild(MapComponent) map!: MapComponent;
 
   private _formBuilder = inject(FormBuilder);
   private registerService = inject(AuthService);
@@ -149,6 +152,8 @@ export class RegisterComponent {
         next: (authResponse) => {
           this._globalAuthService.setToken(authResponse.token);
           this.router.navigate(['/dashboard']).then(() => toast.success('Registro exitoso'));
+        }, error: () => {
+          toast.error('Ha ocurrido un error al registrar el usuario', { description: 'Revisa los datos y vuelve a intentarlo' });
         }
       });
 
@@ -210,12 +215,17 @@ export class RegisterComponent {
     event.preventDefault();
     const tabTrigger = document.querySelector('[hlmTabsTrigger="step-2"]') as HTMLElement;
     if (tabTrigger) {
+      this.map.reinitializeMap();
       tabTrigger.click();
     }
   }
 
   displayToast(): void {
     toast.info('La edad mínima es de 18 años');
+  }
+
+  redirectToHomePage(): void {
+    this.router.navigate(['/']);
   }
 
 }
