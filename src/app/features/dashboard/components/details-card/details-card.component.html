@@ -10,7 +10,7 @@
           <h3 hlmH3>{{currentAdoption?.name}}</h3>
           <p class="text-gray-500 pb-1">{{currentAdoption?.addressVillage}}</p>
           <p hlmP style="margin-top: 10px;">{{currentAdoption?.description}}</p>
-          <button hlmBtn class="mt-4 max-md:w-full w-fit transition-all hover:scale-105">Adoptar Ahora</button>
+          <button *ngIf="this.showBtn" hlmBtn class="mt-4 max-md:w-full w-fit transition-all hover:scale-105">Adoptar Ahora</button>
         </div>
       </div>
     </hlm-sheet-header>
