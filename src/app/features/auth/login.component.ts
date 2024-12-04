@@ -1,8 +1,6 @@
 import {Component, inject} from '@angular/core';
 import {HlmInputDirective} from '@spartan-ng/ui-input-helm';
-import {NgClass} from '@angular/common';
-import {HlmIconComponent} from '@spartan-ng/ui-icon-helm';
-import {HlmH1Directive, HlmH2Directive, HlmH3Directive, HlmPDirective} from '@spartan-ng/ui-typography-helm';
+import {HlmH2Directive, HlmPDirective} from '@spartan-ng/ui-typography-helm';
 import {HlmButtonDirective} from '@spartan-ng/ui-button-helm';
 import {FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
 import {HlmErrorDirective, HlmFormFieldComponent} from '@spartan-ng/ui-formfield-helm';
@@ -14,7 +12,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [HlmInputDirective, NgClass, HlmIconComponent, HlmH3Directive, HlmButtonDirective, HlmPDirective, HlmH2Directive, HlmH1Directive, ReactiveFormsModule, HlmFormFieldComponent, HlmErrorDirective],
+  imports: [HlmInputDirective, HlmButtonDirective, HlmPDirective, HlmH2Directive, ReactiveFormsModule, HlmFormFieldComponent, HlmErrorDirective],
   templateUrl: './login.component.html'
 })
 export class LoginComponent {
@@ -64,4 +62,9 @@ export class LoginComponent {
 
     this.isSubmitting = false;
   }
+
+  redirectToHomePage() {
+    this.router.navigate(['/']);
+  }
+
 }

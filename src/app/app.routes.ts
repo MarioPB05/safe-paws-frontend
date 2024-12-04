@@ -3,11 +3,13 @@ import { HomeComponent } from '@features/home/home.component';
 import {authGuard} from '@core/guards/auth.guard';
 import {LoginComponent} from '@features/auth/login.component';
 import { CreateAdoptionPageComponent } from '@features/create-adoption/pages/create-adoption-page.component';
+import {RegisterComponent} from '@features/auth/register.component';
 import {AdoptionFormPageComponent} from '@features/adoption-form/page/adoption-form-page.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
+  {path: 'register', component: RegisterComponent },
   {
     path: 'dashboard',
     loadChildren: () => import('@dashboard/dashboard.module').then(

@@ -23,8 +23,10 @@
         <p  class="w-auto text-base  text-balance line-clamp-2">{{p.description}}</p>
       </div>
     </div>
-  <button hlmBtn class=" max-w-[180px] w-[180px] mb-0 h-10 mt-4" >Mas información</button>
+  <button hlmBtn class=" max-w-[180px] w-[180px] mb-0 h-10 mt-4" (click)="openDetails(p.id)" >Mas información</button>
 </div>
+
+<app-details-card />
 
 
 
