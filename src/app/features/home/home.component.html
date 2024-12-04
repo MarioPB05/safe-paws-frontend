@@ -1,126 +1,137 @@
-<div>
-  <!-- Sección Principal -->
-  <div class="flex flex-col p-5 lg:mx-24 gap-0 items-center md:text-left md:gap-4 md:items-start lg:flex-row lg:gap-10 lg:justify-center">
-    <div class="max-lg:flex max-lg:flex-col max-lg:items-center max-lg:w-full">
-      <img
-        src="/full_logo.png"
-        alt=""
-        class="flex w-[250px] max-w-full items-center justify-center mb-6 lg:mb-16"/>
-      <p class="text-4xl font-medium sm:text-5xl md:text-6xl max-md:text-center">
-        Una Huella en tu vida,
-        <span class="text-[#FF810A] font-semibold max-lg:block max-lg:text-center">amor para siempre</span>
-      </p>
-      <button hlmBtn class="text-lg py-6 mt-10"><img src="/logo.svg" alt="Icono" class="w-6 h-6 me-4"/> Comenzar ahora</button>
+<div class="w-full bg-[url('/auth_bg.png')] lg:bg-cover">
+  <div class="size-full bg-primary-100 bg-opacity-95">
+    <div>
+      <!-- Sección Principal -->
+      <div class="flex flex-col p-5 lg:mx-24 gap-0 items-center md:text-left md:gap-4 md:items-start lg:flex-row lg:gap-10 lg:justify-center">
+        <div class="max-lg:flex max-lg:flex-col max-lg:items-center max-lg:w-full max-md:mb-8">
+          <img
+            src="/full_logo.png"
+            alt=""
+            class="flex w-[250px] max-w-full items-center justify-center mb-6 lg:mb-16"/>
+          <p class="text-4xl font-medium sm:text-5xl md:text-6xl max-md:text-center">
+            Una Huella en tu vida,
+            <span class="text-[#FF810A] font-semibold max-lg:block max-lg:text-center">amor para siempre</span>
+          </p>
+          <button hlmBtn class="text-lg py-6 mt-10"><img src="/logo.svg" alt="Icono" class="w-6 h-6 me-4"/> Comenzar ahora</button>
+        </div>
+
+        <div class="relative w-full lg:max-w-[700px] h-full flex items-center justify-center lg:justify-end mb-5">
+          <!-- Imagen -->
+          <img
+            src="/Group%2063.png"
+            alt="Registro"
+            class="absolute w-full max-w-[300px] h-auto z-10 lg:mt-14 md:w-[300px] max-md:mx-auto lg:mr-20"
+          />
+          <!-- SVG -->
+          <svg
+            viewBox="0 0 200 200"
+            xmlns="http://www.w3.org/2000/svg"
+            class="w-[400px] md:w-[500px] lg:w-[500px] md:h-[450px] z-0 max-md:mx-auto overflow-visible"
+          >
+            <path
+              fill="#FF810A"
+              d="M45.3,-61.9C59.2,-52.3,71.1,-39.6,76.5,-24.5C81.9,-9.4,80.7,8.2,74.8,23.7C69,39.3,58.5,52.7,45.3,64.4C32,76.1,16,86,-0.4,86.6C-16.8,87.1,-33.7,78.3,-44.3,65.8C-55,53.3,-59.5,37,-61.1,22.2C-62.7,7.3,-61.4,-6.1,-56.4,-17.4C-51.4,-28.6,-42.7,-37.8,-32.7,-48.6C-22.7,-59.4,-11.4,-72,2.2,-75C15.7,-78,31.5,-71.5,45.3,-61.9Z"
+              transform="translate(100 100) scale(1.2)"
+            />
+          </svg>
+        </div>
+      </div>
+
+      <!-- Sección Cómo funciona -->
+      <div class="flex flex-col items-center justify-center mt-8 w-full max-w-[900px] mx-auto px-5">
+        <h2 hlmH2>¿Cómo funciona?</h2>
+        <div class="lg:mt-6 flex flex-col items-center mb-10 sm:flex-col sm:gap-4 md:gap-6 lg:gap-6 flex-wrap justify-center lg:flex-col lg:mx-12">
+          <!-- Contenedor de Tarjetas -->
+          <div class="flex flex-col gap-4 lg:py-4 w-full mt-auto p-2 rounded-lg lg:flex-row md:gap-8 md:h-auto relative lg:p-12 dm:m-5 lg:border-none ">
+            <div class="lg:absolute lg:bottom-0 lg:left-0 lg:w-full lg:h-48 lg:bg-primary lg:rounded-lg "></div>
+            <!-- Tarjeta 1 -->
+            <div class="w-72 sm:w-72 md:w-72 h-80 bg-[#FFDEA8] rounded-3xl px-6 py-10 flex flex-col items-center shadow-lg border-b-8 border-primary relative lg:border-b-8 lg:border-primary lg:border-none transition-all hover:-translate-y-2 hover:shadow-xl">
+              <img src="/image-N1.png" alt="" class="max-h-[180px] -mt-6">
+              <p class="text-2xl font-semibold absolute size-10 rounded-full bg-[#FFF0D4] flex items-center justify-center top-4 left-4">1</p>
+              <div class="flex-1 flex flex-col justify-end items-center">
+                <h3 class="text-xl font-bold mt-2">Regístrate</h3>
+                <p class="text-center text-sm mt-2">Crea una cuenta totalmente gratuita en un par de clicks</p>
+              </div>
+            </div>
+
+            <!-- Tarjeta 2 -->
+            <div class="w-72 sm:w-72 md:w-72 h-80 bg-[#FFDEA8] rounded-3xl px-6 py-10 flex flex-col items-center shadow-lg border-b-8 border-primary relative lg:border-b-8 lg:border-primary lg:border-none transition-all hover:-translate-y-2 hover:shadow-xl">
+              <img src="/image-N2.png" alt="" class="max-h-[180px] -mt-6">
+              <p class="text-2xl font-semibold absolute size-10 rounded-full bg-[#FFF0D4] flex items-center justify-center top-4 left-4">2</p>
+              <div class="flex-1 flex flex-col justify-end items-center">
+                <h3 class="text-xl font-bold mt-2">Sube una foto</h3>
+                <p class="text-center text-sm mt-2">Sube una foto para que todo el mundo vea tu mascota</p>
+              </div>
+            </div>
+            <!-- Tarjeta 3 -->
+            <div class="w-72 sm:w-72 md:w-72 h-80 bg-[#FFDEA8] rounded-3xl px-6 py-10 flex flex-col items-center shadow-lg border-b-8 border-primary relative lg:border-b-8 lg:border-primary lg:border-none transition-all hover:-translate-y-2 hover:shadow-xl">
+              <img src="/image-N3.png" alt="" class="max-h-[180px] -mt-6">
+              <p class="text-2xl font-semibold absolute size-10 rounded-full bg-[#FFF0D4] flex items-center justify-center top-4 left-4">3</p>
+              <div class="flex-1 flex flex-col justify-end items-center">
+                <h3 class="text-xl font-bold mt-2">Esperar</h3>
+                <p class="text-center text-sm mt-2">Crea una cuenta totalmente gratuita en un par de clicks</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
 
-    <div class="relative w-full lg:max-w-[700px] h-full flex items-center justify-center lg:justify-end mb-5">
-      <!-- Imagen -->
-      <img
-        src="/Group%2063.png"
-        alt="Registro"
-        class="absolute w-full max-w-[300px] h-auto z-10 lg:mt-14 md:w-[300px] max-md:mx-auto lg:mr-20"
-      />
-      <!-- SVG -->
-      <svg
-        viewBox="0 0 200 200"
-        xmlns="http://www.w3.org/2000/svg"
-        class="w-[400px] md:w-[500px] lg:w-[500px] md:h-[450px] z-0 max-md:mx-auto overflow-visible"
+
+    <div class="flex justify-center items-center">
+      <div
+        class="flex flex-col justify-center items-center text-center bg-primary w-full md:w-[930px] p-6 rounded-3xl gap-4 mb-10 max-lg:mx-6"
       >
-        <path
-          fill="#FF810A"
-          d="M45.3,-61.9C59.2,-52.3,71.1,-39.6,76.5,-24.5C81.9,-9.4,80.7,8.2,74.8,23.7C69,39.3,58.5,52.7,45.3,64.4C32,76.1,16,86,-0.4,86.6C-16.8,87.1,-33.7,78.3,-44.3,65.8C-55,53.3,-59.5,37,-61.1,22.2C-62.7,7.3,-61.4,-6.1,-56.4,-17.4C-51.4,-28.6,-42.7,-37.8,-32.7,-48.6C-22.7,-59.4,-11.4,-72,2.2,-75C15.7,-78,31.5,-71.5,45.3,-61.9Z"
-          transform="translate(100 100) scale(1.2)"
-        />
-      </svg>
-    </div>
-  </div>
-
-  <!-- Sección Cómo funciona -->
-  <div class="flex flex-col items-center justify-center mt-8 w-full max-w-[900px] mx-auto px-5">
-    <h2 hlmH2>¿Cómo funciona?</h2>
-    <div class="lg:mt-6 flex flex-col items-center mb-10 sm:flex-col sm:gap-4 md:gap-6 lg:gap-6 flex-wrap justify-center lg:flex-col lg:mx-12">
-      <!-- Contenedor de Tarjetas -->
-      <div class="flex flex-col gap-4 lg:py-4 w-full mt-auto p-2 rounded-lg lg:flex-row md:gap-8 md:h-auto relative lg:p-12 dm:m-5 lg:border-none ">
-        <div class="lg:absolute lg:bottom-0 lg:left-0 lg:w-full lg:h-48 lg:bg-primary lg:rounded-lg "></div>
-        <!-- Tarjeta 1 -->
-        <div class="w-72 sm:w-72 md:w-72 h-80 bg-[#FFDEA8] rounded-lg p-6  flex flex-col items-center shadow-lg border-b-8 border-primary relative lg:border-b-8 lg:border-primary  lg:border-none ">
-          <img src="/image-N1.png" alt="" class="w-48 -mt-8">
-          <p class="text-2xl font-semibold -mt-5">1</p>
-          <h3 class="text-xl font-bold mt-2">Regístrate</h3>
-          <p class="text-center text-sm mt-2">Crea una cuenta totalmente gratuita en un par de clicks</p>
-        </div>
-        <!-- Tarjeta 2 -->
-        <div class="w-72 sm:w-72 md:w-72 h-80 bg-[#FFDEA8] rounded-lg p-6 flex flex-col items-center shadow-lg border-b-8 border-primary relative  lg:border-b-8 lg:border-primary  lg:border-none">
-          <img src="/image-N2.png" alt="" class="w-[200px] -mt-8">
-          <p class="text-2xl font-semibold -mt-8">2</p>
-          <h3 class="text-xl font-bold mt-2">Sube una foto</h3>
-          <p class="text-center text-sm mt-2">Sube una foto para que todo el mundo vea tu mascota</p>
-        </div>
-        <!-- Tarjeta 3 -->
-        <div class="w-72 sm:w-72 md:w-72 h-80 bg-[#FFDEA8] rounded-lg p-6 flex flex-col items-center shadow-lg border-b-8 border-primary relative lg:border-b-8 lg:border-primary  lg:border-none">
-          <img src="/image-N3.png" alt="" class="w-[200px] -mt-8">
-          <p class="text-2xl font-semibold -mt-8">3</p>
-          <h3 class="text-xl font-bold mt-2">Esperar</h3>
-          <p class="text-center text-sm mt-2">Crea una cuenta totalmente gratuita en un par de clicks</p>
+        <p class="font-semibold text-2xl md:text-4xl text-white">
+          Subcríbete a nuestro boletín de noticias
+        </p>
+        <p class="text-white text-lg md:text-2xl">
+          Registrate y sé el primero en tener las noticias
+        </p>
+        <div class="relative w-full md:w-[450px]">
+          <input
+            type="text"
+            placeholder="Introduce tu email"
+            class="w-full p-4 border border-gray-300 rounded-lg focus:outline-none"
+          />
+          <button (click)="suscribeNewsLetter()"
+            class="absolute top-1/2 -translate-y-1/2 right-2 bg-black text-white px-4 py-2 rounded-lg focus:outline-none">
+            Enviar
+          </button>
         </div>
       </div>
     </div>
-  </div>
-
-</div>
-
-
-<div class="flex justify-center items-center">
-  <div
-    class="flex flex-col justify-center items-center text-center bg-primary w-full md:w-[930px] p-6 rounded-3xl gap-4 mb-10 max-lg:mx-6"
-  >
-    <p class="font-semibold text-2xl md:text-4xl text-white">
-      Subcribete a nuestro boletin de noticias
-    </p>
-    <p class="text-white text-lg md:text-2xl">
-      Registrate y se el primero en tener las noticias
-    </p>
-    <div class="relative w-full md:w-[450px]">
-      <input
-        type="text"
-        placeholder="Introduce tu email"
-        class="w-full p-4 border border-gray-300 rounded-lg focus:outline-none"
-      />
-      <button (click)="suscribeNewsLetter()"
-        class="absolute top-1/2 -translate-y-1/2 right-2 bg-black text-white px-4 py-2 rounded-lg focus:outline-none">
-        Enviar
-      </button>
+    <div class="flex flex-col md:flex-row bg-black p-6 md:p-8 ">
+      <div class="flex flex-col max-lg:items-center justify-center w-full md:flex-row gap-3 md:gap-5 mt-0 lg:mt-5 md:mt-5">
+          <img
+            src="/logo.png"
+            alt=""
+            class="w-[60px] h-[60px] m-4"
+          />
+        <div class="flex justify-center gap-4 items-center">
+          <img src="/twitter-logo.webp" alt="" class="w-[35px] h-[35px]">
+          <img src="/facebook-logo.png" alt="" class="w-[35px] h-[35px]">
+          <img src="/insta-logo.webp" alt="" class="w-[55px] h-[35px]">
+          <img src="/linkedin-logo.png" alt="" class="w-[35px] h-[35px]">
+        </div>
+      <div class="flex flex-col max-md:text-center gap-4 md:gap-4 lg:flex-row">
+        <div class="flex flex-col mt-4 md:ml-[100px]">
+          <p class="text-white font-semibold text-lg md:text-2xl">
+            Sobre nosotros
+          </p>
+          <p class="text-white text-sm md:text-lg sm:text-lg lg:text-lg">C/ Calatrava</p>
+          <p class="text-white text-sm md:text-lg sm:text-lg lg:text-lg">España</p>
+        </div>
+        <div class="flex flex-col mt-4 md:ml-[100px]">
+          <p class="text-white font-semibold text-lg md:text-2xl">
+            Contáctanos
+          </p>
+          <p class="text-white text-sm md:text-lg sm:text-lg lg:text-lg" >+34 698-35-05-75</p>
+          <p class="text-white text-sm md:text-lg sm:text-lg lg:text-lg">safepaws&#64;safareyes.es</p>
+        </div>
+      </div>
+      </div>
     </div>
-  </div>
-</div>
-<div class="flex flex-col md:flex-row bg-black p-6 md:p-8 ">
-  <div class="flex flex-col max-lg:items-center justify-center w-full md:flex-row gap-3 md:gap-5 mt-0 lg:mt-5 md:mt-5">
-      <img
-        src="/logo.png"
-        alt=""
-        class="w-[60px] h-[60px] m-4"
-      />
-    <div class="flex justify-center gap-4 items-center">
-      <img src="/twitter-logo.webp" alt="" class="w-[35px] h-[35px]">
-      <img src="/facebook-logo.png" alt="" class="w-[35px] h-[35px]">
-      <img src="/insta-logo.webp" alt="" class="w-[55px] h-[35px]">
-      <img src="/linkedin-logo.png" alt="" class="w-[35px] h-[35px]">
-    </div>
-  <div class="flex flex-col max-md:text-center gap-4 md:gap-4 lg:flex-row">
-    <div class="flex flex-col mt-4 md:ml-[100px]">
-      <p class="text-white font-semibold text-lg md:text-2xl">
-        Sobre nosotros
-      </p>
-      <p class="text-white text-sm md:text-lg sm:text-lg lg:text-lg">C/ Calatrava</p>
-      <p class="text-white text-sm md:text-lg sm:text-lg lg:text-lg">España</p>
-    </div>
-    <div class="flex flex-col mt-4 md:ml-[100px]">
-      <p class="text-white font-semibold text-lg md:text-2xl">
-        Contactanos
-      </p>
-      <p class="text-white text-sm md:text-lg sm:text-lg lg:text-lg" >+34 698-35-05-75</p>
-      <p class="text-white text-sm md:text-lg sm:text-lg lg:text-lg">SafePaws&#64;safareyes.es</p>
-    </div>
-  </div>
   </div>
 </div>
