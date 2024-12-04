@@ -1,45 +1,26 @@
 <div class="flex flex-col-reverse lg:grid lg:grid-cols-10 gap-12 py-6 sm:px-16 px-6">
-  <div class="col-span-3 border-2 border-primary rounded-md p-6 ">
+  <div class="col-span-3 border-2 border-primary rounded-md p-6 bg-primary-100">
     <h2 hlmH2>Datos del animal</h2>
-    <div class="mx-2 mt-6 flex flex-col items-center gap-2">
+    <div class="mx-2 mt-10 flex flex-col items-center gap-2">
       <div class="sm:size-[210px] size-[140px] rounded-full border-2 border-primary">
-        <img class="size-full rounded-full" src="https://www.shutterstock.com/image-vector/crocodile-art-vector-silhouette-illustration-600nw-2482805231.jpg">
+        <img class="size-full rounded-full" [src]="adoptionDetails?.photo">
       </div>
-      <h3 hlmH3>JoseJulio</h3>
-      <p hlmP style="margin: 0 !Important;">Esta es la descripcion de Josejulio el cocodrilo</p>
+      <h3 hlmH3 class="my-2">{{ adoptionDetails?.name }}</h3>
+      <p hlmP style="margin: 0 !Important;">{{ adoptionDetails?.description}}</p>
     </div>
   </div>
-  <div class="col-span-7 border-2 border-primary rounded-md p-6">
+  <div class="col-span-7 border-2 border-primary rounded-md p-6 bg-primary-100">
     <div class="flex justify-between sm:flex-row flex-col-reverse gap-4">
       <h1 hlmH1 class="mb-6">Formulario de adopción</h1>
-      <button hlmBtn>Volver al inicio</button>
+      <button hlmBtn class="sm:min-w-[130px]" (click)="redirectToDashboard()">Volver al inicio</button>
     </div>
-    <div class="grid md:grid-cols-2 gap-8">
-      <div>
-        <label hlmLabel>1. Esta es la pregunta uno por ejemplo</label>
-        <input hlmInput class="w-full"/>
-      </div>
-      <div>
-        <label hlmLabel>2. Esta es la pregunta uno por ejemplo</label>
-        <input hlmInput class="w-full"/>
-      </div>
-      <div>
-        <label hlmLabel>3. Esta es la pregunta uno por ejemplo</label>
-        <input hlmInput class="w-full"/>
-      </div>
-      <div>
-        <label hlmLabel>4. Esta es la pregunta uno por ejemplo</label>
-        <input hlmInput class="w-full"/>
-      </div>
-      <div>
-        <label hlmLabel>5. Esta es la pregunta uno por ejemplo</label>
-        <input hlmInput class="w-full"/>
-      </div>
-      <div>
-        <label hlmLabel>6. Esta es la pregunta uno por ejemplo</label>
-        <input hlmInput class="w-full"/>
-      </div>
-    </div>
+    <form [formGroup]="form" (ngSubmit)="submitForm()" class="grid sm:grid-cols-2 grid-cols-1 gap-8 w-full">
+      <app-question class="mt-0" *ngFor="let question of questions" [question]="question">
+        <hlm-error *ngIf="form.get(question.id.toString())?.invalid && form.get(question.id.toString())?.touched">
+          Este campo es obligatorio
+        </hlm-error>
+      </app-question>
+    </form>
     <button hlmBtn class="mt-8">Enviar formulario</button>
   </div>
 </div>
