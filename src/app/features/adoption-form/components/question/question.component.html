@@ -1,0 +1,23 @@
+<div class="flex flex-col justify-between h-full">
+  <!-- Campo de texto -->
+  <label hlmLabel class="mb-2 w-full">{{ question.question }}</label>
+
+  <div class="flex-3">
+  <input *ngIf="question.type === 0" class="w-full" hlmInput
+         [placeholder]="question.placeholder"
+         type="text"
+         [formControlName]="question.id" />
+
+  <!-- Textarea -->
+  <!-- TODO: Corregir el placeholder -->
+  <textarea *ngIf="question.type === 1" class="mt-2 w-full" hlmInput
+            [formControlName]="question.id">
+  </textarea>
+
+  <!-- Switch -->
+  <div *ngIf="question.type === 3" class="flex items-center w-min h-max pb-2">
+    <hlm-switch [formControlName]="question.id"/>
+    <p class="ps-4 text-gray-400">{{ question.placeholder }}</p>
+  </div>
+  </div>
+</div>
