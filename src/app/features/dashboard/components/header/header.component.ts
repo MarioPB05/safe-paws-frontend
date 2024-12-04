@@ -30,4 +30,8 @@ export class HeaderComponent {
       toast.error('Error al cerrar sesión');
     }
   }
+
+  redirectToHomePage() {
+    this.router.navigate(['/']);
+  }
 }

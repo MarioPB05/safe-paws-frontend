@@ -167,6 +167,10 @@ export class MapComponent implements AfterViewInit {
     }
   }
 
+  public reinitializeMap(): void {
+    this.resetMapView();
+  }
+
   ngAfterViewInit() {
     this.getUserLocation();
   }

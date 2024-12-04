@@ -13,6 +13,7 @@ import {HlmH3Directive, HlmPDirective} from '@spartan-ng/ui-typography-helm';
 import {HlmBadgeDirective} from '../../../../../libs/ui/ui-badge-helm/src';
 import {HlmButtonDirective} from '@spartan-ng/ui-button-helm';
 import {toast} from 'ngx-sonner';
+import {NgIf} from '@angular/common';
 
 interface AdoptionDetail extends AdoptionAvailable {
   animalType: string;
@@ -30,6 +31,7 @@ interface AdoptionDetail extends AdoptionAvailable {
     HlmBadgeDirective,
     HlmPDirective,
     HlmButtonDirective,
+    NgIf,
   ],
   templateUrl: './details-card.component.html'
 })
@@ -37,6 +39,7 @@ export class DetailsCardComponent {
   @ViewChild('sheetComponent') sheet!: HlmSheetComponent;
 
   currentAdoption: AdoptionDetail | null = null;
+  showBtn = true;
 
   constructor(
     private adoptionService: AdoptionService,
@@ -48,7 +51,9 @@ export class DetailsCardComponent {
     this.sheet.open();
   }
 
-  public showPostDetails(post: number): void {
+  public showPostDetails(post: number, showBtn: boolean = true): void {
+    this.showBtn = showBtn;
+
     forkJoin({
       animalTypes: this.enumService.getAnimalTypes(),
       adoptionDetail: this.adoptionService.getAdoptionDetail(post)
@@ -63,7 +68,7 @@ export class DetailsCardComponent {
 
         this.openSheet();
       },
-      error: (error) => {
+      error: () => {
         toast.error('No se pudo cargar los detalles del animal');
       }
     })
