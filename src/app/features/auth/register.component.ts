@@ -25,7 +25,7 @@ import {NgIf} from '@angular/common';
 import {MapComponent} from '@shared/components/map/map.component';
 import {AddressRequest, Location} from '@core/models/map.model';
 import {toast} from 'ngx-sonner';
-import {RegisterRequest} from '@core/models/register.model';
+import {RegisterRequest} from '@core/models/auth.model';
 import {Router} from '@angular/router';
 import { AuthService } from './services/auth.service';
 import { AuthService as GlobalAuthService } from '@core/services/auth.service';
