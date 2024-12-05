@@ -16,7 +16,7 @@ SafePaws es una aplicación web que te permite encontrar a tu nuevo mejor amigo.
 
 ### Requisitos previos
 - Tener instalado Node.js en tu dispositivo.
-- Tener el backend de SafePaws configurado y corriendo en tu dispositivo.
+- Tener el backend de SafePaws configurado y corriendo en tu dispositivo. `https://github.com/MarioPB05/safe-paws-backend.git`
 
 ### Instalación
 1. Clona este repositorio en tu dispositivo.
