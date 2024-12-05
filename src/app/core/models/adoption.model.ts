@@ -7,4 +7,6 @@ export interface AdoptionAvailable {
   typeId: number;
   deleted: string;
   addressVillage: string;
+  coordinateX: number;
+  coordinateY: number;
 }
