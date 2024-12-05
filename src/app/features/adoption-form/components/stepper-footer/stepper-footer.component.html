@@ -1,0 +1,5 @@
+<div class="flex justify-between">
+  <button hlmBtn variant="outline" (click)="previous.emit()" [disabled]="currentStepIndex === 0">Anterior</button>
+  <button hlmBtn [disabled]="disableNext" *ngIf="!isLastStep" (click)="next.emit()">Siguiente</button>
+  <button hlmBtn *ngIf="isLastStep" (click)="complete.emit()">Completar</button>
+</div>
