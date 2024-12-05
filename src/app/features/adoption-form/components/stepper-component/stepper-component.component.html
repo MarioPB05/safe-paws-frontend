@@ -1,1 +1,17 @@
-<app-stepper-header [steps]="this.steps" [currentStepIndex]="this.currentStepIndex" />
+<div class="flex flex-col justify-between h-full">
+  <app-stepper-header class="w-fit mx-auto" [steps]="this.steps" [currentStepIndex]="this.currentStepIndex" (selectStep)="goToStep($event)" />
+
+  <div class="flex-1 py-10">
+    <ng-container *ngIf="steps.length > 0 && currentStepIndex >= 0">
+      <ng-container *ngTemplateOutlet="steps[currentStepIndex].content"></ng-container>
+    </ng-container>
+  </div>
+
+  <app-stepper-footer
+    [currentStepIndex]="currentStepIndex"
+    [isLastStep]="currentStepIndex === steps.length - 1"
+    [disableNext]="disableNext"
+    (next)="next()"
+    (previous)="previous()"
+    (complete)="complete()" />
+</div>
