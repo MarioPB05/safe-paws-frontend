@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {Step} from '@features/adoption-form/components/stepper-component/stepper-interfaces';
+import {Step} from '@shared/components/stepper/stepper-component/stepper-interfaces';
 import {NgForOf, NgIf} from '@angular/common';
 
 @Component({

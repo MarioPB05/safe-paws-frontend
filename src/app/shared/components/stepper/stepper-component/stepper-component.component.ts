@@ -1,7 +1,7 @@
 import {Component, EventEmitter, HostBinding, Input, Output} from '@angular/core';
-import {StepperHeaderComponent} from '@features/adoption-form/components/stepper-header/stepper-header.component';
-import {Step} from '@features/adoption-form/components/stepper-component/stepper-interfaces';
-import {StepperFooterComponent} from '@features/adoption-form/components/stepper-footer/stepper-footer.component';
+import {StepperHeaderComponent} from '@shared/components/stepper/stepper-header/stepper-header.component';
+import {Step} from '@shared/components/stepper/stepper-component/stepper-interfaces';
+import {StepperFooterComponent} from '@shared/components/stepper/stepper-footer/stepper-footer.component';
 import {NgIf, NgTemplateOutlet} from '@angular/common';
 
 @Component({
