@@ -5,6 +5,7 @@ export interface Step {
   description: string;
   isActive: boolean;
   isCompleted: boolean;
+  disabled?: boolean;
   content: TemplateRef<any>;
   onClick?: () => boolean | void;
   onNext?: () => boolean | void;
