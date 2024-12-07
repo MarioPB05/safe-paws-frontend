@@ -4,7 +4,7 @@ import {authGuard} from '@core/guards/auth.guard';
 import {LoginComponent} from '@features/auth/login.component';
 import { CreateAdoptionPageComponent } from '@features/create-adoption/pages/create-adoption-page.component';
 import {RegisterComponent} from '@features/auth/register.component';
-import {AdoptionFormPageComponent} from '@features/adoption-form/page/adoption-form-page.component';
+import {AdoptionFormPageComponent} from '@features/adoption-form/adoption-form-page.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
