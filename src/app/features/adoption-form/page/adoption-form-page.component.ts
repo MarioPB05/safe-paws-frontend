@@ -17,8 +17,14 @@ import {HlmButtonDirective} from '@spartan-ng/ui-button-helm';
 import {QuestionService} from '@features/adoption-form/services/question.service';
 import {QuestionsAvailable} from '@core/models/question.model';
 import {HlmLabelDirective} from '@spartan-ng/ui-label-helm';
-import {NgIf} from '@angular/common';
+import {NgClass, NgIf} from '@angular/common';
 import {HlmInputDirective} from '@spartan-ng/ui-input-helm';
+import {FormsModule} from '@angular/forms';
+import {HlmProgressIndicatorDirective} from '@spartan-ng/ui-progress-helm';
+import {BrnProgressComponent, BrnProgressIndicatorComponent} from '@spartan-ng/ui-progress-brain';
+import {CreateRequest} from '@core/models/request.model';
+import {CreateRequestAnswer} from '@core/models/requestanswer.model';
+import {RequestService} from '@dashboard/services/request.service';
 
 interface AdoptionDetail extends AdoptionAvailable {
   animalType: string;
@@ -26,7 +32,8 @@ interface AdoptionDetail extends AdoptionAvailable {
 }
 
 interface Question extends QuestionsAvailable {
-  subQuestion?: QuestionsAvailable;
+  subQuestion?: Question;
+  value?: string | number | boolean;
 }
 
 @Component({
@@ -41,7 +48,12 @@ interface Question extends QuestionsAvailable {
     HlmButtonDirective,
     HlmLabelDirective,
     NgIf,
-    HlmInputDirective
+    HlmInputDirective,
+    FormsModule,
+    BrnProgressComponent,
+    BrnProgressIndicatorComponent,
+    HlmProgressIndicatorDirective,
+    NgClass
   ],
   templateUrl: './adoption-form-page.component.html',
 })
@@ -49,15 +61,20 @@ export class AdoptionFormPageComponent implements OnInit, AfterViewInit {
   @ViewChild('stepOne') stepOne!: TemplateRef<any>;
   @ViewChild('stepTwo') stepTwo!: TemplateRef<any>;
   @ViewChild('stepThree') stepThree!: TemplateRef<any>;
+  @ViewChild(StepperComponentComponent) stepper!: StepperComponentComponent;
 
   steps: Step[] = [];
   disableNext = false;
+  lastQuestion = false;
+  currentProgress = 0;
+  message = '';
 
   public adoptionId: number = -1;
   public adoptionDetails: AdoptionDetail | undefined;
   public questions: Question[] = [];
   public currentQuestionIndex = 0;
   private router = inject(Router);
+  private dto?: CreateRequest;
 
   constructor(
     private route: ActivatedRoute,
@@ -65,6 +82,8 @@ export class AdoptionFormPageComponent implements OnInit, AfterViewInit {
     private enumService: EnumService,
     private mapService: MapService,
     private questionService: QuestionService
+    private questionService: QuestionService,
+    private requestService: RequestService
   ) {}
 
   ngOnInit() {
@@ -81,7 +100,7 @@ export class AdoptionFormPageComponent implements OnInit, AfterViewInit {
           this.adoptionDetails = {
             ...adoptionDetail,
             animalType: animalType?.name || 'Desconocido',
-            fullAddress: ''
+            fullAddress: 'Cargando...'
           };
 
           if (this.adoptionDetails) {
@@ -115,7 +134,7 @@ export class AdoptionFormPageComponent implements OnInit, AfterViewInit {
           isActive: true,
           isCompleted: false,
           content: this.stepOne,
-          onClick: () => this.disableNext = false,
+          onClick: () => { this.disableNext = false },
           onNext: this.getQuestions.bind(this),
         },
         {
@@ -125,15 +144,24 @@ export class AdoptionFormPageComponent implements OnInit, AfterViewInit {
           isCompleted: false,
           content: this.stepTwo,
           onClick: this.getQuestions.bind(this),
-          onNext: () => this.disableNext = false,
-          onPrevious: () => this.disableNext = false,
+          onNext: () => { this.disableNext = false },
+          onPrevious: () => { this.disableNext = false },
         },
         {
           title: 'Tercer Paso',
           description: 'Confirmación',
           isActive: false,
           isCompleted: false,
-          content: this.stepThree
+          content: this.stepThree,
+          onClick: () => {
+            if (!this.lastQuestion) {
+              toast.error('Por favor responde todas las preguntas antes de continuar');
+              return false;
+            }
+
+            return true;
+          },
+          onPrevious: () => { this.disableNext = true },
         }
       ];
     });
@@ -141,6 +169,8 @@ export class AdoptionFormPageComponent implements OnInit, AfterViewInit {
 
   getQuestions() {
     this.disableNext = true;
+
+    if (this.questions.length) return;
 
     this.questionService.getQuestions().subscribe({
       next: (questions) => {
@@ -163,8 +193,6 @@ export class AdoptionFormPageComponent implements OnInit, AfterViewInit {
             this.questions = this.questions.filter((question) => question.id !== subQuestionId);
           }
         });
-
-        console.log(this.questions);
       },
       error: () => {
         toast.error('No se pudo cargar las preguntas');
@@ -174,10 +202,99 @@ export class AdoptionFormPageComponent implements OnInit, AfterViewInit {
 
   previousQuestion() {
     this.currentQuestionIndex--;
+
+    if (this.currentQuestionIndex === 0) {
+      this.setProgress(0);
+    }else {
+      this.setProgress(null);
+    }
+
+    this.lastQuestion = false;
   }
 
   nextQuestion() {
+    if (this.currentQuestionIndex === this.questions.length - 1) {
+      this.saveQuestions();
+      this.stepper.next();
+      return;
+    }
+
+    console.log(this.questions[this.currentQuestionIndex].value);
+
+    const value = this.questions[this.currentQuestionIndex].value;
+
+    if (this.questions[this.currentQuestionIndex].type === 3 && value == undefined && this.questions[this.currentQuestionIndex].required) {
+      this.questions[this.currentQuestionIndex].value = false; // Si no se responde una pregunta de tipo booleano, se asume como false
+    }else if (this.questions[this.currentQuestionIndex].required && (value === '' || value === null || value === undefined || (this.questions[this.currentQuestionIndex].type != 3 && (value as string).trim() === ''))) {
+      toast.error('Esta pregunta es obligatoria, por favor responde antes de continuar');
+      return;
+    }
+
+    console.log(this.questions[this.currentQuestionIndex].value);
+
+    if (this.currentQuestionIndex  + 1 === this.questions.length - 1) {
+      this.lastQuestion = true;
+    }
+
+    this.setProgress(null, true);
+
+    if (this.lastQuestion) this.setProgress(100);
+
     this.currentQuestionIndex++;
+  }
+
+  setProgress(progress: number | null, increase = false): void {
+    if (progress === null) {
+      const baseIndex = increase ? this.currentQuestionIndex + 1 : this.currentQuestionIndex;
+
+      const clampedIndex = Math.min(Math.max(baseIndex, 0), this.questions.length);
+
+      progress = (clampedIndex / this.questions.length) * 100;
+    }
+
+    this.currentProgress = Math.max(0, Math.min(progress, 100)); // Clampa entre 0 y 100
+  }
+
+  saveQuestions() {
+    const answers: CreateRequestAnswer[] = [];
+    this.questions.forEach((question) => {
+      if (question.value !== undefined) {
+        answers.push({
+          questionId: question.id,
+          answer: question.value as string
+        });
+      }
+    });
+
+    this.dto = {
+      message: this.message,
+      postId: this.adoptionId,
+      answers: answers
+    };
+  }
+
+  saveRequest() {
+    if (!this.dto) return;
+
+    if (this.message === '' || this.message.trim() == '' || this.message == ' ') {
+      toast.error('Por favor, escribe un mensaje para el dueño del animal');
+      return;
+    }
+
+    this.disableNext = true;
+    this.dto.message = this.message;
+
+    this.requestService.createRequest(this.dto).subscribe({
+      next: () => {
+        this.router.navigate(['/dashboard']).then(() => toast.success('Solicitud de adopción enviada'));
+      },
+      error: () => {
+        toast.error('No se pudo enviar la solicitud de adopción, por favor intenta de nuevo más tarde');
+      },
+      complete: () => {
+        this.disableNext = false;
+      }
+    });
   }
 
 }
