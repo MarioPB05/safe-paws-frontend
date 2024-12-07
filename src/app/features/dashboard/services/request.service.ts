@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {CreateRequest, Request} from '@core/models/request.model';
 
@@ -22,9 +22,17 @@ export class RequestService {
     return this.http.get<Request[]>(`${this.baseUrl}/sent`);
   }
 
-  createRequest(dto: CreateRequest): Observable<number> {
-    return this.http.post<number>(`${this.baseUrl}/add`, dto);
+  createRequest(dto: CreateRequest): Observable<string> {
+    return this.http.post(`${this.baseUrl}/add`, dto, { responseType: 'text' });
   }
 
+  getRequestPdf(requestCode: string): Observable<Blob> {
+    return this.http.get(`${this.baseUrl}/${requestCode}/pdf`, {
+      responseType: 'blob',
+      headers: new HttpHeaders({
+        'Accept': 'application/pdf'
+      })
+    });
+  }
 
 }
