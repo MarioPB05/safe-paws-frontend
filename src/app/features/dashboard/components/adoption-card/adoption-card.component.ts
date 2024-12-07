@@ -7,6 +7,7 @@ import {provideIcons} from '@ng-icons/core';
 import {lucideMapPin} from '@ng-icons/lucide';
 import {AdoptionAvailable} from '@core/models/adoption.model';
 import {DetailsCardComponent} from '@dashboard/components/details-card/details-card.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-adoption-card',
@@ -27,13 +28,16 @@ export class AdoptionCardComponent {
   @Input() adoption!: AdoptionAvailable;
   @ViewChild(DetailsCardComponent) detailsCard!: DetailsCardComponent;
 
+  constructor(private router: Router) {}
+
   openDetails(): void {
     this.detailsCard.showPostDetails(this.adoption.id);
   }
 
   redirectToAdoptionForm($event: MouseEvent): void {
     $event.stopPropagation();
-    // TODO: Implement redirection to adoption form
+
+    this.router.navigate([`/adoption/${this.adoption.id}/form`]);
   }
 
   truncateText(text: string, maxLength: number): string {
