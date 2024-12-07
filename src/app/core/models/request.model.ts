@@ -1,3 +1,5 @@
+import {CreateRequestAnswer} from '@core/models/requestanswer.model';
+
 export interface Request {
   requestId: number;
   requestDate: Date;
@@ -9,5 +11,11 @@ export interface Request {
   message: string;
   addressVillage: string;
   deleted: boolean;
+}
+
+export interface CreateRequest {
+  message: string,
+  postId: number,
+  answers: CreateRequestAnswer[]
 }
 
