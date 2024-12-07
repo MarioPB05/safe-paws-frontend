@@ -7,8 +7,8 @@ import {HlmSwitchComponent} from '@spartan-ng/ui-switch-helm';
 import {toast} from 'ngx-sonner';
 import {
   StepperComponentComponent
-} from '@features/adoption-form/components/stepper-component/stepper-component.component';
-import {Step} from '@features/adoption-form/components/stepper-component/stepper-interfaces';
+} from '@shared/components/stepper/stepper-component/stepper-component.component';
+import {Step} from '@shared/components/stepper/stepper-component/stepper-interfaces';
 import {forkJoin} from 'rxjs';
 import {EnumService} from '@core/services/enum.service';
 import {MapService} from '@shared/services/map.service';
@@ -81,7 +81,6 @@ export class AdoptionFormPageComponent implements OnInit, AfterViewInit {
     private adoptionService: AdoptionService,
     private enumService: EnumService,
     private mapService: MapService,
-    private questionService: QuestionService
     private questionService: QuestionService,
     private requestService: RequestService
   ) {}
@@ -295,6 +294,23 @@ export class AdoptionFormPageComponent implements OnInit, AfterViewInit {
         this.disableNext = false;
       }
     });
+  }
+
+  downloadPdf(): void {
+    this.requestService.getRequestPdf().subscribe({
+      next: (response) => {
+        const blob = new Blob([response], { type: 'application/pdf' });
+
+        // Creamos un enlace de descarga para el archivo PDF
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = 'reporte.pdf';  // El nombre con el que se descargará el archivo
+        link.click();  // Simulamos un clic para iniciar la descarga
+      },
+      error: () => {
+        toast.error('No se pudo descargar el archivo PDF');
+      }
+    })
   }
 
 }
