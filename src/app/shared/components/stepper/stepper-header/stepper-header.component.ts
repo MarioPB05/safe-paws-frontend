@@ -1,13 +1,14 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Step} from '@shared/components/stepper/stepper-component/stepper-interfaces';
-import {NgForOf, NgIf} from '@angular/common';
+import {NgClass, NgForOf, NgIf} from '@angular/common';
 
 @Component({
   selector: 'app-stepper-header',
   standalone: true,
   imports: [
     NgForOf,
-    NgIf
+    NgIf,
+    NgClass
   ],
   templateUrl: './stepper-header.component.html'
 })

@@ -1,7 +1,7 @@
 <div class="flex flex-col lg:flex-row justify-around lg:gap-10 w-full">
   <div *ngFor="let step of steps; let i = index">
     <div class="flex gap-4 items-center">
-      <div (click)="selectStep.emit(i)" *ngIf="step.isActive" class="flex items-center justify-center min-w-[64px] min-h-[64px] size-16 rounded-full bg-primary-300 cursor-pointer">
+      <div (click)="selectStep.emit(i)" *ngIf="step.isActive" class="flex items-center justify-center min-w-[64px] min-h-[64px] size-16 rounded-full bg-primary-300" [ngClass]="!step.disabled ? 'cursor-pointer' : ''">
         <svg class="size-10 fill-white" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
           <g clip-path="url(#clip0_197_94)">
             <path d="M9.15 0.0107098C8.79194 0.0436125 8.4629 0.137484 8.13387 0.300064C7.70419 0.512 7.36355 0.799419 7.05774 1.20781C6.72 1.65877 6.46839 2.25974 6.35419 2.88394C6.05806 4.50587 6.5729 6.33587 7.70129 7.67426C7.8329 7.83006 8.15903 8.15619 8.30806 8.28006C8.52871 8.46297 8.79387 8.64974 9.00484 8.76974C9.88645 9.27103 10.8261 9.39974 11.6565 9.13458C12.8574 8.75039 13.6926 7.60652 13.8774 6.09297C14.0661 4.54361 13.5416 2.85006 12.4858 1.59684C12.3542 1.44103 12.0281 1.1149 11.879 0.991032C11.5713 0.735548 11.309 0.561355 10.9839 0.397806C10.5939 0.200387 10.1932 0.0745802 9.79355 0.0242577C9.64935 0.00490284 9.28548 -0.00187111 9.15 0.0107098Z" />
@@ -18,7 +18,7 @@
         </svg>
       </div>
 
-      <div (click)="selectStep.emit(i)" *ngIf="!step.isActive && !step.isCompleted" class="flex items-center justify-center min-w-[64px] min-h-[64px] size-16 rounded-full border-dashed border-2 border-primary-300 cursor-pointer">
+      <div (click)="selectStep.emit(i)" *ngIf="!step.isActive && !step.isCompleted" class="flex items-center justify-center min-w-[64px] min-h-[64px] size-16 rounded-full border-dashed border-2 border-primary-300" [ngClass]="!step.disabled ? 'cursor-pointer' : ''">
         <svg class="size-10 fill-primary-300" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
           <g clip-path="url(#clip0_197_94)">
             <path d="M9.15 0.0107098C8.79194 0.0436125 8.4629 0.137484 8.13387 0.300064C7.70419 0.512 7.36355 0.799419 7.05774 1.20781C6.72 1.65877 6.46839 2.25974 6.35419 2.88394C6.05806 4.50587 6.5729 6.33587 7.70129 7.67426C7.8329 7.83006 8.15903 8.15619 8.30806 8.28006C8.52871 8.46297 8.79387 8.64974 9.00484 8.76974C9.88645 9.27103 10.8261 9.39974 11.6565 9.13458C12.8574 8.75039 13.6926 7.60652 13.8774 6.09297C14.0661 4.54361 13.5416 2.85006 12.4858 1.59684C12.3542 1.44103 12.0281 1.1149 11.879 0.991032C11.5713 0.735548 11.309 0.561355 10.9839 0.397806C10.5939 0.200387 10.1932 0.0745802 9.79355 0.0242577C9.64935 0.00490284 9.28548 -0.00187111 9.15 0.0107098Z" />
@@ -35,7 +35,7 @@
         </svg>
       </div>
 
-      <div (click)="selectStep.emit(i)" *ngIf="step.isCompleted" class="flex items-center justify-center size-16 rounded-full bg-[#28A745] cursor-pointer">
+      <div (click)="selectStep.emit(i)" *ngIf="step.isCompleted" class="flex items-center justify-center size-16 rounded-full bg-[#28A745]" [ngClass]="!step.disabled ? 'cursor-pointer' : ''">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-10 stroke-white">
           <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
         </svg>
