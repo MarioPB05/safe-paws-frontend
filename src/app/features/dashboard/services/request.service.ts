@@ -22,5 +22,9 @@ export class RequestService {
     return this.http.get<Request[]>(`${this.baseUrl}/sent`);
   }
 
+  createRequest(dto: CreateRequest): Observable<number> {
+    return this.http.post<number>(`${this.baseUrl}/add`, dto);
+  }
+
 
 }
