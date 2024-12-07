@@ -17,7 +17,13 @@
         </defs>
       </svg>
 
-      <h2 class="mb-8 max-lg:text-center" hlmH2>Formulario de Adopción</h2>
+      <h2 class="mb-8 max-lg:text-center max-lg:flex-col flex justify-between" hlmH2>
+        Formulario de Adopción
+
+        <a href="/dashboard" hlmBtn variant="link">
+          Volver al inicio
+        </a>
+      </h2>
 
       <app-stepper-component [steps]="this.steps" [disableNext]="disableNext" (completed)="saveRequest()" />
     </div>
@@ -43,8 +49,6 @@
       </ul>
     </div>
   </div>
-
-  <button (click)="downloadPdf()">PRUEBAS</button>
 </ng-template>
 
 <ng-template #stepTwo>
