@@ -38,3 +38,8 @@ export interface MapPostResponse {
   longitude: number;
   postId: number;
 }
+
+export interface CheckPostResponse {
+  available: boolean;
+  requestCode: string | null;
+}

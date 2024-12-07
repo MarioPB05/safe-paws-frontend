@@ -4,6 +4,8 @@ import {authGuard} from '@core/guards/auth.guard';
 import {LoginComponent} from '@features/auth/login.component';
 import { CreateAdoptionPageComponent } from '@features/create-adoption/pages/create-adoption-page.component';
 import {RegisterComponent} from '@features/auth/register.component';
+import {AdoptionFormPageComponent} from '@features/adoption-form/adoption-form-page.component';
+import {AdoptionTrackingPageComponent} from '@features/adoption-tracking/adoption-tracking-page.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -16,5 +18,7 @@ export const routes: Routes = [
     ),
     canActivate: [authGuard],
   },
-  { path: 'new/adoption', component: CreateAdoptionPageComponent, canActivate: [authGuard]}
+  { path: 'new/adoption', component: CreateAdoptionPageComponent, canActivate: [authGuard]},
+  { path: 'adoption/:id/form', component: AdoptionFormPageComponent, canActivate: [authGuard]},
+  { path: 'adoption/tracking/:requestCode', component: AdoptionTrackingPageComponent, canActivate: [authGuard]}
 ];
