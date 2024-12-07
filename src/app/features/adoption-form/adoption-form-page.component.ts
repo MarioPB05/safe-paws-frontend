@@ -90,10 +90,16 @@ export class AdoptionFormPageComponent implements OnInit, AfterViewInit {
       this.adoptionId = params['id'];
 
       forkJoin({
+        adoptionAvailable: this.adoptionService.checkRequest(this.adoptionId),
         animalTypes: this.enumService.getAnimalTypes(),
         adoptionDetail: this.adoptionService.getAdoptionDetail(this.adoptionId)
       }).subscribe({
-        next: ({animalTypes, adoptionDetail}) => {
+        next: ({adoptionAvailable, animalTypes, adoptionDetail}) => {
+          if (!adoptionAvailable.available && adoptionAvailable.requestCode != null) {
+            this.router.navigate([`/adoption/tracking/${adoptionAvailable.requestCode}`]).then(() => toast.error('Ya has enviado una solicitud para esta adopción'));
+            return;
+          }
+
           const animalType = animalTypes.find(({id}) => id === adoptionDetail.typeId);
 
           this.adoptionDetails = {
@@ -284,33 +290,17 @@ export class AdoptionFormPageComponent implements OnInit, AfterViewInit {
     this.dto.message = this.message;
 
     this.requestService.createRequest(this.dto).subscribe({
-      next: () => {
-        this.router.navigate(['/dashboard']).then(() => toast.success('Solicitud de adopción enviada'));
+      next: (requestCode) => {
+        this.router.navigate([`/adoption/tracking/${requestCode}`]).then(() => {});
       },
-      error: () => {
+      error: (e) => {
+        console.log(e);
         toast.error('No se pudo enviar la solicitud de adopción, por favor intenta de nuevo más tarde');
       },
       complete: () => {
         this.disableNext = false;
       }
     });
-  }
-
-  downloadPdf(): void {
-    this.requestService.getRequestPdf().subscribe({
-      next: (response) => {
-        const blob = new Blob([response], { type: 'application/pdf' });
-
-        // Creamos un enlace de descarga para el archivo PDF
-        const link = document.createElement('a');
-        link.href = URL.createObjectURL(blob);
-        link.download = 'reporte.pdf';  // El nombre con el que se descargará el archivo
-        link.click();  // Simulamos un clic para iniciar la descarga
-      },
-      error: () => {
-        toast.error('No se pudo descargar el archivo PDF');
-      }
-    })
   }
 
 }
