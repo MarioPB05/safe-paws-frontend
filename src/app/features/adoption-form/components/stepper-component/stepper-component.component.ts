@@ -1,4 +1,4 @@
-import {Component, HostBinding, Input} from '@angular/core';
+import {Component, EventEmitter, HostBinding, Input, Output} from '@angular/core';
 import {StepperHeaderComponent} from '@features/adoption-form/components/stepper-header/stepper-header.component';
 import {Step} from '@features/adoption-form/components/stepper-component/stepper-interfaces';
 import {StepperFooterComponent} from '@features/adoption-form/components/stepper-footer/stepper-footer.component';
@@ -18,6 +18,7 @@ import {NgIf, NgTemplateOutlet} from '@angular/common';
 export class StepperComponentComponent {
   @Input() steps: Step[] = [];
   @Input() disableNext = false;
+  @Output() completed = new EventEmitter<void>();
   currentStepIndex = 0;
 
   @HostBinding('class') class = 'h-full';
@@ -52,7 +53,11 @@ export class StepperComponentComponent {
   goToStep(index: number) {
     this.currentStepIndex = index;
 
-    this.steps[this.currentStepIndex].onClick?.();
+    // Si el onClick retorna false, no se cambia de paso
+    if (this.steps[this.currentStepIndex].onClick != undefined && this.steps[this.currentStepIndex].onClick?.() === false) {
+      this.currentStepIndex = this.steps.findIndex(step => step.isActive);
+      return;
+    }
 
     this.steps.forEach((step, i) => {
       step.isActive = i === index;
@@ -67,7 +72,7 @@ export class StepperComponentComponent {
   }
 
   complete() {
-    console.log('Stepper complete!');
+    this.completed.emit();
   }
 
 }
