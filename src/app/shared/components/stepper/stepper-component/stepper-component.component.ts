@@ -18,6 +18,7 @@ import {NgIf, NgTemplateOutlet} from '@angular/common';
 export class StepperComponentComponent {
   @Input() steps: Step[] = [];
   @Input() disableNext = false;
+  @Input() showFooter = true;
   @Output() completed = new EventEmitter<void>();
   currentStepIndex = 0;
 
@@ -51,6 +52,8 @@ export class StepperComponentComponent {
   }
 
   goToStep(index: number) {
+    if (this.steps[this.currentStepIndex].disabled) return;
+
     this.currentStepIndex = index;
 
     // Si el onClick retorna false, no se cambia de paso

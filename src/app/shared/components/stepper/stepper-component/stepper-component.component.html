@@ -8,6 +8,7 @@
   </div>
 
   <app-stepper-footer
+    *ngIf="showFooter"
     [currentStepIndex]="currentStepIndex"
     [isLastStep]="currentStepIndex === steps.length - 1"
     [disableNext]="disableNext"
