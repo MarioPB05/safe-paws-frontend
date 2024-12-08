@@ -1,5 +1,5 @@
-<div class="relative border-4 border-primary rounded-2xl py-2 md:h-fit md:p-3 w-full min-w-[280px] md:w-[380px] flex flex-col md:flex-row items-center justify-between ">
-  <div class="size-[130px] md:absolute md:-left-16 md:top-1/2 md:-translate-y-1/2 max-md:mb-2">
+<div class="relative border-4 border-primary rounded-2xl py-2 md:h-fit md:p-3 w-full min-w-[280px] md:w-[380px] flex flex-col md:flex-row items-center justify-between shadow-lg shadow-black/40">
+  <div class="size-[130px] md:absolute md:-left-16 md:top-1/2 md:-translate-y-1/2 max-md:mb-2  shadow-md shadow-black/50 rounded-full">
     <div class="size-full relative flex flex-col justify-end items-center">
       <img class="absolute size-full rounded-full z-0" [src]="request.postPhoto" alt="Imagen del perro"/>
       <div *ngIf="mode == 'sent'" [ngClass]="getStatusClass()" class="absolute top-1 right-1 rounded-full size-8 border-4 border-white"></div>
