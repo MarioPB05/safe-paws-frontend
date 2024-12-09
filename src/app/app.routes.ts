@@ -6,6 +6,7 @@ import { CreateAdoptionPageComponent } from '@features/create-adoption/pages/cre
 import {RegisterComponent} from '@features/auth/register.component';
 import {AdoptionFormPageComponent} from '@features/adoption-form/adoption-form-page.component';
 import {AdoptionTrackingPageComponent} from '@features/adoption-tracking/adoption-tracking-page.component';
+import {ChatPageComponent} from '@features/chat/chat-page.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -20,5 +21,6 @@ export const routes: Routes = [
   },
   { path: 'new/adoption', component: CreateAdoptionPageComponent, canActivate: [authGuard]},
   { path: 'adoption/:id/form', component: AdoptionFormPageComponent, canActivate: [authGuard]},
-  { path: 'adoption/tracking/:requestCode', component: AdoptionTrackingPageComponent, canActivate: [authGuard]}
+  { path: 'adoption/tracking/:requestCode', component: AdoptionTrackingPageComponent, canActivate: [authGuard]},
+  { path: 'chat/:roomCode', component: ChatPageComponent, canActivate: [authGuard]},
 ];
