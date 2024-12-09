@@ -6,7 +6,20 @@ import { provideIcons } from '@ng-icons/core';
 import { lucideMapPin, lucideUser2,lucideCalendar, lucideEye, lucideMessagesSquare } from '@ng-icons/lucide';
 import { Request } from '@core/models/request.model';
 import {NgClass, NgIf} from '@angular/common';
+import { BrnSheetContentDirective, BrnSheetTriggerDirective } from '@spartan-ng/ui-sheet-brain';
+import {
+  HlmSheetComponent,
+  HlmSheetContentComponent,
+  HlmSheetDescriptionDirective,
+  HlmSheetFooterComponent,
+  HlmSheetHeaderComponent,
+  HlmSheetTitleDirective,
+} from '@spartan-ng/ui-sheet-helm';
 import dayjs from 'dayjs';
+import {RequestService} from '@dashboard/services/request.service';
+import {HlmButtonDirective} from '@spartan-ng/ui-button-helm';
+import {Router} from '@angular/router';
+import {toast} from 'ngx-sonner';
 
 @Component({
   selector: 'app-request-card',
@@ -18,6 +31,15 @@ import dayjs from 'dayjs';
     HlmIconComponent,
     NgIf,
     NgClass,
+    HlmSheetComponent,
+    HlmSheetContentComponent,
+    HlmSheetDescriptionDirective,
+    HlmSheetFooterComponent,
+    HlmSheetHeaderComponent,
+    HlmSheetTitleDirective,
+    BrnSheetTriggerDirective,
+    BrnSheetContentDirective,
+    HlmButtonDirective,
   ],
   templateUrl: './request-card.component.html',
   providers: [provideIcons({ lucideMapPin, lucideUser2 , lucideCalendar, lucideEye, lucideMessagesSquare})]
@@ -25,6 +47,11 @@ import dayjs from 'dayjs';
 export class RequestCardComponent {
   @Input() request!: Request;
   @Input() mode = 'received' as 'received' | 'sent';
+
+  constructor(
+    private requestService: RequestService,
+    private router: Router
+  ) {}
 
   getDaysElapsed(): number {
     const requestSentDate = dayjs(this.request.requestDate);
@@ -53,6 +80,23 @@ export class RequestCardComponent {
       default:
         return 'bg-gray-500';
     }
+  }
+
+  downloadPdf(code: string): void {
+    this.requestService.downloadRequestPdf(code);
+  }
+
+  acceptRequest(code: string): void {
+    this.requestService.acceptRequest(code).subscribe({
+      next: (chatCode) => {
+        this.router.navigate(['/chat/' + chatCode]).then(() => {
+          toast.info('Has aceptado la petición de adopción', { description: 'Ahora puedes chatear con el solicitante' });
+        })
+      },
+      error: () => {
+        toast.error('Ha ocurrido un error al aceptar la petición de adopción');
+      }
+    });
   }
 
 }
