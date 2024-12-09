@@ -38,7 +38,7 @@
     <span class="text-gray-400">Código de la Solicitud: {{ requestCode }}</span>
     <p class="text-balance text-center mt-2">Tu solicitud ha sido enviada con éxito. Ahora, el responsable de la mascota revisará tu solicitud y decidirá si la acepta o rechaza. Recuerda visitar esta página regularmente para conocer el estado de tu solicitud. ¡Gracias por formar parte de esta misión de amor!</p>
 
-    <div class="max-md:hidden max-w-[650px] mb-12 mt-6 overflow-hidden rounded-2xl border-4 border-primary">
+    <div class="max-md:hidden max-w-[650px] mb-12 mt-6 overflow-hidden rounded-2xl">
       <img class="-mt-32 -mb-16" src="/animales.png" alt="Un grupo de animales">
     </div>
 
@@ -72,5 +72,18 @@
         </hlm-alert-dialog-content>
       </hlm-alert-dialog>
     </div>
+  </div>
+</ng-template>
+
+<ng-template #stepTwo>
+  <div class="flex flex-col items-center justify-center h-full">
+    <h3 class="text-center" hlmH3>¡Tu solicitud ha sido aceptada!</h3>
+    <p class="text-balance text-center mt-2 max-w-[650px]">
+      ¡Enhorabuena!
+      Ahora, el responsable de la mascota generará un contrato de adopción que deberás firmar. Además, se pondrá en contacto contigo para acordar una cita para que conozcas a tu nueva mascota.
+      ¡Gracias por formar parte de esta misión de amor!
+    </p>
+
+   <app-chat sender="adopter" roomCode="VSF5C3BUIPGHMNKVDBAN" />
   </div>
 </ng-template>
