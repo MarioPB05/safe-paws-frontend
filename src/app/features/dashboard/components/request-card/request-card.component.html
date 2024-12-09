@@ -30,9 +30,45 @@
   </div>
 
   <!-- Parte derecha de la tarjeta -->
-  <div class="bg-primary rounded-xl text-white size-[80px] flex-col items-center justify-center flex mb-2 sm:mb-0">
-    <p *ngIf="mode == 'sent'" hlmP class="text-3xl font-medium">{{ getDaysElapsed() }}</p>
-    <p *ngIf="mode == 'sent'" hlmP style="margin: 0">días</p>
-    <hlm-icon *ngIf="mode == 'received'" size="lg" name="lucideEye"></hlm-icon>
-  </div>
+  <button *ngIf="mode == 'sent'" class="cursor-pointer bg-primary rounded-xl text-white size-[80px] flex-col items-center justify-center flex mb-2 sm:mb-0">
+    <p hlmP class="text-3xl font-medium">{{ getDaysElapsed() }}</p>
+    <p hlmP style="margin: 0">días</p>
+  </button>
+
+  <hlm-sheet *ngIf="mode == 'received'">
+    <button side="bottom" brnSheetTrigger class="cursor-pointer bg-primary rounded-xl text-white size-[80px] flex-col items-center justify-center flex mb-2 sm:mb-0">
+      <hlm-icon *ngIf="mode == 'received'" size="lg" name="lucideEye"></hlm-icon>
+    </button>
+
+    <hlm-sheet-content *brnSheetContent='let ctx'>
+      <hlm-sheet-header>
+        <h3 hlmSheetTitle>Revisar la solicitud <span class="text-gray-400 text-sm font-normal">({{request.requestCode}})</span></h3>
+        <p hlmSheetDescription>Aquí podrá revisar y gestionar la solicitud de adopción que ha recibido. Te recomendamos descargar la solicitud antes de tomar una decisión.</p>
+
+        <br>
+
+        <div class="flex gap-4">
+          <button variant="outline" (click)="downloadPdf(request.requestCode)" hlmBtn>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 me-2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+            </svg>
+            Descargar PDF
+          </button>
+
+          <ng-container *ngIf="request.requestStatus === 0">
+            <button (click)="acceptRequest(request.requestCode)" hlmBtn>Aceptar Solicitud</button>
+            <button variant="destructive" hlmBtn>Rechazar Solicitud</button>
+          </ng-container>
+
+          <a [href]="'/chat/' + request.chatRoomCode" hlmBtn *ngIf="request.requestStatus === 2">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 me-2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 0 1 .865-.501 48.172 48.172 0 0 0 3.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z" />
+            </svg>
+            Acceder al Chat
+          </a>
+
+        </div>
+      </hlm-sheet-header>
+    </hlm-sheet-content>
+  </hlm-sheet>
 </div>
