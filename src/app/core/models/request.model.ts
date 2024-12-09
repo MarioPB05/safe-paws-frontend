@@ -23,4 +23,5 @@ export interface CreateRequest {
 
 export interface RequestStatusResponse {
   status: number;
+  chatRoomCode?: string;
 }
