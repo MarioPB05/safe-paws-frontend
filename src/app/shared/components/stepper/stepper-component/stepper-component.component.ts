@@ -2,7 +2,8 @@ import {Component, EventEmitter, HostBinding, Input, Output} from '@angular/core
 import {StepperHeaderComponent} from '@shared/components/stepper/stepper-header/stepper-header.component';
 import {Step} from '@shared/components/stepper/stepper-component/stepper-interfaces';
 import {StepperFooterComponent} from '@shared/components/stepper/stepper-footer/stepper-footer.component';
-import {NgIf, NgTemplateOutlet} from '@angular/common';
+import {AsyncPipe, NgIf, NgTemplateOutlet} from '@angular/common';
+import {BehaviorSubject} from 'rxjs';
 
 @Component({
   selector: 'app-stepper-component',
@@ -11,67 +12,93 @@ import {NgIf, NgTemplateOutlet} from '@angular/common';
     StepperHeaderComponent,
     StepperFooterComponent,
     NgIf,
-    NgTemplateOutlet
+    NgTemplateOutlet,
+    AsyncPipe
   ],
   templateUrl: './stepper-component.component.html'
 })
 export class StepperComponentComponent {
-  @Input() steps: Step[] = [];
+  private stepsSubject = new BehaviorSubject<Step[]>([]);
+  steps$ = this.stepsSubject.asObservable();
+  currentStepIndex = 0;
+
   @Input() disableNext = false;
   @Input() showFooter = true;
   @Output() completed = new EventEmitter<void>();
-  currentStepIndex = 0;
 
   @HostBinding('class') class = 'h-full';
 
-  next() {
-    if (this.currentStepIndex < this.steps.length - 1) {
-      this.steps[this.currentStepIndex].isCompleted = true;
-      this.steps[this.currentStepIndex].isActive = false;
+  @Input()
+  set steps(steps: Step[]) {
+    this.stepsSubject.next(steps);
 
-      this.steps[this.currentStepIndex].onNext?.();
+    const activeStepIndex = steps.findIndex((step) => step.isActive);
+    this.currentStepIndex = activeStepIndex >= 0 ? activeStepIndex : 0;
+  }
+
+  get steps(): Step[] {
+    return this.stepsSubject.getValue();
+  }
+
+  next() {
+    const steps = this.steps;
+    if (this.currentStepIndex < steps.length - 1) {
+      steps[this.currentStepIndex].isCompleted = true;
+      steps[this.currentStepIndex].isActive = false;
+
+      steps[this.currentStepIndex].onNext?.();
 
       this.currentStepIndex++;
 
-      this.steps[this.currentStepIndex].isActive = true;
+      steps[this.currentStepIndex].isActive = true;
+
+      this.stepsSubject.next(steps);
     }
   }
 
   previous() {
+    const steps = this.steps;
     if (this.currentStepIndex > 0) {
-        this.steps[this.currentStepIndex].isCompleted = false;
-        this.steps[this.currentStepIndex].isActive = false;
+      steps[this.currentStepIndex].isCompleted = false;
+      steps[this.currentStepIndex].isActive = false;
 
-        this.steps[this.currentStepIndex].onPrevious?.();
+      steps[this.currentStepIndex].onPrevious?.();
 
-        this.currentStepIndex--;
+      this.currentStepIndex--;
 
-        this.steps[this.currentStepIndex].isActive = true;
-        this.steps[this.currentStepIndex].isCompleted = false;
+      steps[this.currentStepIndex].isActive = true;
+      steps[this.currentStepIndex].isCompleted = false;
+
+      this.stepsSubject.next(steps);
     }
   }
 
   goToStep(index: number) {
-    if (this.steps[this.currentStepIndex].disabled) return;
+    const steps = this.steps;
+    if (steps[this.currentStepIndex].disabled) return;
 
     this.currentStepIndex = index;
 
     // Si el onClick retorna false, no se cambia de paso
-    if (this.steps[this.currentStepIndex].onClick != undefined && this.steps[this.currentStepIndex].onClick?.() === false) {
-      this.currentStepIndex = this.steps.findIndex(step => step.isActive);
+    if (
+      steps[this.currentStepIndex].onClick != undefined &&
+      steps[this.currentStepIndex].onClick?.() === false
+    ) {
+      this.currentStepIndex = steps.findIndex((step) => step.isActive);
       return;
     }
 
-    this.steps.forEach((step, i) => {
+    steps.forEach((step, i) => {
       step.isActive = i === index;
     });
 
-    this.steps[index].isCompleted = false;
+    steps[index].isCompleted = false;
 
-    // Marcar los pasos anteriores como completados
-    this.steps.forEach((step, i) => {
+    steps.forEach((step, i) => {
       step.isCompleted = i < index;
     });
+
+    this.stepsSubject.next(steps);
   }
 
   complete() {
