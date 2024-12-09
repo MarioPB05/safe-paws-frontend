@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Observable } from 'rxjs';
-import {CreateRequest, Request} from '@core/models/request.model';
+import {CreateRequest, Request, RequestStatusResponse} from '@core/models/request.model';
+import {toast} from 'ngx-sonner';
 
 @Injectable({
   providedIn: 'root',
@@ -33,6 +34,31 @@ export class RequestService {
         'Accept': 'application/pdf'
       })
     });
+  }
+
+  downloadRequestPdf(requestCode: string): void {
+    this.getRequestPdf(requestCode).subscribe({
+      next: (pdfBlob) => {
+        const file = new Blob([pdfBlob], { type: 'application/pdf' });
+        const fileURL = URL.createObjectURL(file);
+
+        const a = document.createElement('a');
+        a.href = fileURL;
+        a.download = 'adoption_request_' + requestCode + '.pdf';
+        a.click();
+      },
+      error: () => {
+        toast.error('No se pudo descargar el archivo PDF');
+      }
+    })
+  }
+
+  getRequestStatus(requestCode: string): Observable<RequestStatusResponse> {
+    return this.http.get<RequestStatusResponse>(`${this.baseUrl}/${requestCode}/status`);
+  }
+
+  acceptRequest(requestCode: string): Observable<string> {
+    return this.http.get(`${this.baseUrl}/${requestCode}/accept`, { responseType: 'text' });
   }
 
 }
