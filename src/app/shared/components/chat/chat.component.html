@@ -30,7 +30,7 @@
       </div>
     </hlm-scroll-area>
   </div>
-  <div class="w-full flex gap-4 mt-4">
+  <div class="w-full flex gap-4 mt-4 px-4">
     <input (keydown.enter)="sendMessage()" [(ngModel)]="newMessage" class="w-full" hlmInput placeholder="Escribe tu mensaje...">
 
     <button [disabled]="sendCooldown" (click)="sendMessage()" hlmBtn>
