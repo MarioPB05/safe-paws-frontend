@@ -131,6 +131,8 @@ export class RequestCardComponent {
   }
 
   downloadPdf(code: string): void {
+    this.sheet.close(1);
+    toast.info('Descargando PDF', { description: 'La solicitud de adopción se descargará automáticamente' });
     this.requestService.downloadRequestPdf(code);
   }
 
