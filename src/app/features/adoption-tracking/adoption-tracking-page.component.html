@@ -77,13 +77,99 @@
 
 <ng-template #stepTwo>
   <div class="flex flex-col items-center justify-center h-full">
-    <h3 class="text-center" hlmH3>¡Tu solicitud ha sido aceptada!</h3>
-    <p class="text-balance text-center mt-2 max-w-[650px]">
-      ¡Enhorabuena!
-      Ahora, el responsable de la mascota generará un contrato de adopción que deberás firmar. Además, se pondrá en contacto contigo para acordar una cita para que conozcas a tu nueva mascota.
-      ¡Gracias por formar parte de esta misión de amor!
-    </p>
+    <ng-container *ngIf="status === 1">
+      <h3 class="text-center" hlmH3>Tu solicitud ha sido rechazada</h3>
+      <p class="text-balance text-center mt-2 max-w-[650px]">
+        ¡Lo sentimos! Tu solicitud ha sido rechazada. No te desanimes, en nuestra web encontrarás muchos otros animales que necesitan un hogar. ¡Gracias por formar parte de esta misión de amor!
+      </p>
+      <img src="/sad_dog_2.png" class="max-w-[300px] mt-6" />
+      <a href="/dashboard" hlmBtn class="mt-6">Volver al inicio</a>
+    </ng-container>
+    <ng-container *ngIf="status === 3">
+      <h3 class="text-center" hlmH3>El animal ha sido adoptado</h3>
+      <p class="text-balance text-center mt-2 max-w-[650px]">
+        ¡Lo sentimos! El animal que querías adoptar ya ha sido adoptado por otra persona. No te desanimes, en nuestra web encontrarás muchos otros animales que necesitan un hogar. ¡Gracias por formar parte de esta misión de amor!
+      </p>
+      <img src="/sad_dog_2.png" class="max-w-[300px] mt-6" />
+      <a href="/dashboard" hlmBtn class="mt-6">Volver al inicio</a>
+    </ng-container>
+    <ng-container *ngIf="status === 2">
+      <h3 class="text-center" hlmH3>¡Tu solicitud ha sido aceptada!</h3>
+      <p class="text-balance text-center mt-2 max-w-[650px]">
+        ¡Enhorabuena!
+        Ahora, el responsable de la mascota generará un contrato de adopción que deberás firmar. Además, se pondrá en contacto contigo para acordar una cita para que conozcas a tu nueva mascota.
+        ¡Gracias por formar parte de esta misión de amor!
+      </p>
 
-   <app-chat sender="adopter" roomCode="VSF5C3BUIPGHMNKVDBAN" />
+      <app-chat sender="adopter" [roomCode]="chatRoomCode" />
+    </ng-container>
+  </div>
+</ng-template>
+
+<ng-template #stepThree>
+  <div class="flex flex-col items-center justify-center h-full">
+    <ng-container *ngIf="status === 4">
+      <h3 class="text-center" hlmH3>Firmar contrato de adopción</h3>
+      <p class="text-balance text-center mt-2 max-w-[650px]">
+        El responsable de la mascota ha generado un contrato de adopción que deberás firmar. Te recomendamos leer detenidamente el contrato antes de firmarlo. Una vez firmado, no podrás deshacer esta acción.
+      </p>
+    </ng-container>
+
+    <ng-container *ngIf="status === 5">
+      <h3 class="text-center" hlmH3>Gracias por Adoptar</h3>
+      <p class="text-balance text-center mt-2 max-w-[650px]">
+        El contrato de adopción ha sido firmado por ambas partes. Ahora, solo queda que el responsable de la mascota se ponga en contacto contigo para acordar una cita para que conozcas a tu nueva mascota. ¡Gracias por formar parte de esta misión de amor!
+      </p>
+    </ng-container>
+
+    <div class="flex justify-center gap-4 mt-6">
+      <button variant="outline" (click)="downloadContract()" hlmBtn>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 me-2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+        </svg>
+        Descargar Contrato
+      </button>
+
+      <ng-container *ngIf="status === 4">
+        <hlm-dialog>
+          <button hlmBtn brnDialogTrigger>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 me-2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
+            </svg>
+            Firmar Contrato
+          </button>
+
+          <hlm-dialog-content class="sm:max-w-[425px]" *brnDialogContent="let ctx">
+            <hlm-dialog-header>
+              <h3 hlmDialogTitle>Firmar el Contrato</h3>
+              <p hlmDialogDescription>Te recomendamos leer detenidamente el contrato antes de firmarlo. Una vez firmado, no podrás deshacer esta acción. Pulsa "C" para borrar y empezar de nuevo.</p>
+            </hlm-dialog-header>
+            <div class="py-4 flex justify-center">
+              <app-signature-pad />
+            </div>
+            <hlm-dialog-footer>
+              <hlm-alert-dialog>
+                <button (click)="checkSignature()" hlmBtn>Firmar</button>
+                <hlm-alert-dialog-content *brnAlertDialogContent="let ctx">
+                  <hlm-alert-dialog-header>
+                    <h3 hlmAlertDialogTitle>¿Estás seguro de firmar el contrato?</h3>
+                    <p hlmAlertDialogDescription>
+                      Una vez firmado, no podrás deshacer esta acción.
+                    </p>
+                  </hlm-alert-dialog-header>
+                  <hlm-alert-dialog-footer>
+                    <button hlmAlertDialogCancel (click)="closeAll()">Cancelar</button>
+                    <button hlmAlertDialogAction (click)="signContract()">Firmar el Contrato</button>
+                  </hlm-alert-dialog-footer>
+                </hlm-alert-dialog-content>
+              </hlm-alert-dialog>
+
+            </hlm-dialog-footer>
+          </hlm-dialog-content>
+        </hlm-dialog>
+      </ng-container>
+    </div>
+
+    <app-chat sender="adopter" [roomCode]="chatRoomCode" />
   </div>
 </ng-template>
