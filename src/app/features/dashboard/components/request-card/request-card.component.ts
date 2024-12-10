@@ -192,7 +192,7 @@ export class RequestCardComponent {
     this.requestService.signContract(code, { signature: this.signaturePad.getImage(), isOwner: true }).subscribe({
       next: () => {
         this.router.navigate(['/dashboard']).then(() => {
-          toast.info('Has firmado el contrato de adopción', { description: 'Ahora debes esperar a que el adoptante debe firmar el contrato' });
+          toast.info('Has firmado el contrato de adopción', { description: 'Ahora debes esperar a que el adoptante firme el contrato' });
         });
       },
       error: () => {
