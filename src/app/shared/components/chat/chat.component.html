@@ -6,7 +6,7 @@
 
 <div class="flex-1 flex flex-col pb-4 pt-0">
   <div class="flex-grow h-full overflow-y-auto">
-    <hlm-scroll-area class="w-full h-[600px] lg:h-full rounded-md ps-4 pb-4">
+    <hlm-scroll-area class="w-full h-[600px] rounded-md ps-4 pb-4">
       <div *ngFor="let message of messages">
         <ng-container *ngIf="message.sender === 'server'">
           <span class="block w-full text-center text-gray-400 my-4">{{ message.content }}</span>
