@@ -4,6 +4,8 @@ export interface Request {
   requestId: number;
   requestDate: Date;
   requestStatus: number;
+  requestCode: string;
+  chatRoomCode: string;
   ownerName: string;
   applierName: string;
   postName: string;
@@ -19,3 +21,7 @@ export interface CreateRequest {
   answers: CreateRequestAnswer[]
 }
 
+export interface RequestStatusResponse {
+  status: number;
+  chatRoomCode?: string;
+}

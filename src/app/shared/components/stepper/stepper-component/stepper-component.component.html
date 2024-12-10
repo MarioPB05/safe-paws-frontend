@@ -1,18 +1,31 @@
 <div class="flex flex-col justify-between h-full">
-  <app-stepper-header class="w-fit mx-auto" [steps]="this.steps" [currentStepIndex]="this.currentStepIndex" (selectStep)="goToStep($event)" />
+  <!-- Header -->
+  <app-stepper-header
+    class="w-fit mx-auto"
+    [steps]="(steps$ | async) || []"
+    [currentStepIndex]="currentStepIndex"
+    (selectStep)="goToStep($event)">
+  </app-stepper-header>
 
+  <!-- Step Content -->
   <div class="flex-1 py-10">
-    <ng-container *ngIf="steps.length > 0 && currentStepIndex >= 0">
-      <ng-container *ngTemplateOutlet="steps[currentStepIndex].content"></ng-container>
+    <ng-container *ngIf="(steps$ | async) as steps">
+      <ng-container *ngIf="steps.length > 0 && currentStepIndex >= 0">
+        <ng-container *ngIf="steps[currentStepIndex]?.content as stepContent">
+          <ng-container *ngTemplateOutlet="stepContent"></ng-container>
+        </ng-container>
+      </ng-container>
     </ng-container>
   </div>
 
+  <!-- Footer -->
   <app-stepper-footer
     *ngIf="showFooter"
     [currentStepIndex]="currentStepIndex"
-    [isLastStep]="currentStepIndex === steps.length - 1"
+    [isLastStep]="((steps$ | async) ?? []).length - 1 === currentStepIndex"
     [disableNext]="disableNext"
     (next)="next()"
     (previous)="previous()"
-    (complete)="complete()" />
+    (complete)="complete()">
+  </app-stepper-footer>
 </div>

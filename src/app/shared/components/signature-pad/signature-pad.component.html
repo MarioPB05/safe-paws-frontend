@@ -1,0 +1,11 @@
+<canvas
+  width="300"
+  height="300"
+  id="drawPlace"
+  #canvasElement
+  (mousedown)="startDrawing($event)"
+  (mousemove)="drawLine($event)"
+  (mouseup)="stopDrawing()"
+  style="border: 1px solid #eee"
+>
+</canvas>

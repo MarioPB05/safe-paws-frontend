@@ -1,0 +1,42 @@
+<div class="w-full h-[50px] bg-primary rounded-t-2xl flex items-center justify-between px-4">
+  <p class="font-medium text-white">
+    {{sender === 'owner' ? 'Chat con el adoptante' : 'Chat con el responsable de la mascota'}}
+  </p>
+</div>
+
+<div class="flex-1 flex flex-col pb-4 pt-0">
+  <div class="flex-grow h-full overflow-y-auto">
+    <hlm-scroll-area class="w-full h-[600px] lg:h-full rounded-md ps-4 pb-4">
+      <div *ngFor="let message of messages">
+        <ng-container *ngIf="message.sender === 'server'">
+          <span class="block w-full text-center text-gray-400 my-4">{{ message.content }}</span>
+        </ng-container>
+
+        <ng-container *ngIf="(message.sender === 'adopter' && sender === 'adopter') || (message.sender === 'owner' && sender === 'owner') || message.sender === 'me'">
+          <div class="flex justify-end mt-4 me-4">
+            <div class="bg-primary text-white py-2 px-4 rounded-sm shadow-md max-w-md relative">
+              {{ message.content }}
+            </div>
+          </div>
+        </ng-container>
+
+        <ng-container *ngIf="(message.sender === 'adopter' && sender === 'owner') || (message.sender === 'owner' && sender === 'adopter') || message.sender === 'other'">
+          <div class="flex mt-4">
+            <div class="bg-primary-200 py-2 px-4 rounded-lg shadow-sm max-w-md relative">
+              {{ message.content }}
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </hlm-scroll-area>
+  </div>
+  <div class="w-full flex gap-4 mt-4 px-4">
+    <input (keydown.enter)="sendMessage()" [(ngModel)]="newMessage" class="w-full" hlmInput placeholder="Escribe tu mensaje...">
+
+    <button [disabled]="sendCooldown" (click)="sendMessage()" hlmBtn>
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" />
+      </svg>
+    </button>
+  </div>
+</div>

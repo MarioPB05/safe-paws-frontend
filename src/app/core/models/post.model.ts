@@ -43,3 +43,8 @@ export interface CheckPostResponse {
   available: boolean;
   requestCode: string | null;
 }
+
+export interface SignContractRequest {
+  signature: string;
+  isOwner: boolean;
+}

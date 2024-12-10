@@ -90,6 +90,9 @@
       ],
       "@spartan-ng/ui-progress-helm": [
         ".\\src/libs/ui/ui-progress-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-dialog-helm": [
+        ".\\src/libs/ui/ui-dialog-helm/src/index.ts"
       ]
     }
   },
