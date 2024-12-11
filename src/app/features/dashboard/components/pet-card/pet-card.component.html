@@ -1,0 +1,32 @@
+
+<div *ngIf="posts.length == 0 && !loading" class="">
+  <img src="/sad_dog.png" alt="">
+  <p>No tienes Mascotas adoptadas</p>
+</div>
+<div class="border rounded-md w-auto h-auto flex flex-col items-center  max-w-[400px] p-4 relative mb-4" style="border-color: #FF810A; background-color: #FFFBF7" *ngFor="let p of posts" >
+  <div
+    class="rounded-bl-md rounded-tr-md size-8 absolute right-0 top-0"
+    style="background-color: #FFA500"
+    *ngIf="p.status == '0'">
+    <hlm-icon size="sm" name="lucideClock" class="mt-2" style="color: white"></hlm-icon>
+  </div>
+  <div
+    class="rounded-bl-md rounded-tr-md size-8 absolute right-0 top-0"
+    style="background-color: #28A745"
+    *ngIf="p.status == '1'">
+    <hlm-icon size="sm" name="lucideCheck" class="mt-2" style="color: white"></hlm-icon>
+  </div>
+    <div class="flex md:gap-10 gap-4 md:flex-row flex-col items-center justify-center">
+      <img class="w-full h-[100px] rounded-md max-w-[100px]" [src]="p.photo" alt="a">
+      <div class="flex flex-col text-center justify-center  md:text-start ">
+        <p hlmH3 >{{p.name}}</p>
+        <p  class="w-auto text-base  text-balance line-clamp-2">{{p.description}}</p>
+      </div>
+    </div>
+  <button hlmBtn class=" max-w-[180px] w-[180px] mb-0 h-10 mt-4" (click)="openDetails(p.id)" >Mas información</button>
+</div>
+
+<app-details-card />
+
+
+

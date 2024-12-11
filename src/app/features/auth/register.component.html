@@ -1,0 +1,87 @@
+<div class="relative w-screen h-screen bg-[url('/auth_bg.png')] bg-no-repeat bg-cover">
+  <div class="absolute inset-0 bg-white bg-opacity-80"></div>
+  <div class="absolute w-screen pt-2 max-sm:px-4 z-10">
+    <img (click)="redirectToHomePage()" src="/full_logo.png" class="max-w-fit w-full mx-auto cursor-pointer" alt="Logotipo de Safe Paws">
+  </div>
+
+  <!-- Contenido principal -->
+  <div class="relative size-full flex justify-center items-center overflow-y-auto pt-10"> <!-- overflow-y-auto y padding-top adicional -->
+    <div style="box-shadow: 0 0 20px 7px rgba(240, 104, 6, 0.8);" class="flex justify-center w-[80%] sm:w-[80%] md:w-[55%] my-24 lg:w-[40%] items-center border-4 rounded-md p-6 bg-white">
+      <hlm-tabs tab="step-1" class="w-[90%]">
+        <div class="text-center">
+          <h2 hlmH2>Registro</h2>
+          <p hlmP class="mb-4 text-gray-500" style="margin-top: 8px;">¿Ya tienes una cuenta? <a href="/login" class="text-primary">Iniciar sesión</a></p>
+        </div>
+        <hlm-tabs-list class="w-[60%] mx-auto grid grid-cols-2 mt-2" aria-label="tabs example">
+          <button hlmTabsTrigger="step-1">1</button>
+          <button (click)="this.map.reinitializeMap()" hlmTabsTrigger="step-2">2</button>
+        </hlm-tabs-list>
+        <form [formGroup]="form" action="">
+          <!-- Paso 1 -->
+          <div hlmTabsContent="step-1">
+            <div class="flex items-center justify-center sm:flex-row py-3 sm:gap-x-4 md:gap-0">
+              <app-image-uploader class="size-[150px] text-center" svgSize="size-12" (imageSelected)="imageSelected($event)" textSize="text-base"></app-image-uploader>
+            </div>
+            <div class="grid sm:grid-cols-2 justify-items-center">
+              <hlm-form-field class="my-2">
+                <input class="md:w-full" hlmInput type="text" placeholder="Nombre de Usuario" formControlName="username" />
+              </hlm-form-field>
+              <hlm-form-field class="my-2">
+                <input class="md:w-full" hlmInput type="email" placeholder="Email" formControlName="email" />
+              </hlm-form-field>
+              <hlm-form-field class="my-2 relative">
+                <input class="md:w-full" hlmInput [type]="showPassword ? 'text' : 'password'" placeholder="Contraseña" formControlName="password" />
+                <button type="button" (click)="togglePasswordVisibility()" class="absolute inset-y-0 -top-8 right-0 flex items-center pr-3">
+                  <hlm-icon *ngIf="!showPassword" size="sm" name="lucideEye"></hlm-icon>
+                  <hlm-icon *ngIf="showPassword" size="sm" name="lucideEyeOff"></hlm-icon>
+                </button>
+                <hlm-hint> -Mínimo 8 caracteres</hlm-hint>
+              </hlm-form-field>
+
+              <hlm-form-field class="my-2 relative">
+                <input class="md:w-full" hlmInput [type]="showConfirmPassword ? 'text' : 'password'" placeholder="Repetir contraseña" />
+                <button type="button" (click)="toggleConfirmPasswordVisibility()" class="absolute inset-y-0 -top-8 right-0 flex items-center pr-3">
+                  <hlm-icon *ngIf="!showConfirmPassword" size="sm" name="lucideEye"></hlm-icon>
+                  <hlm-icon *ngIf="showConfirmPassword" size="sm" name="lucideEyeOff"></hlm-icon>
+                </button>
+              </hlm-form-field>
+            </div>
+            <div class="flex items-center justify-center sm:justify-end sm:flex-row gap-10">
+              <button (click)="goToTab2($event)" class="mt-6" hlmBtn>Siguiente paso</button>
+            </div>
+          </div>
+          <!-- Paso 2 -->
+          <div hlmTabsContent="step-2">
+            <div class="grid sm:grid-cols-2 justify-items-center border-b border-primary mt-4 sm:gap-x-4">
+              <hlm-form-field class="my-2">
+                <input class="md:w-full" hlmInput type="text" placeholder="Nombre" formControlName="name" />
+              </hlm-form-field>
+              <hlm-form-field class="my-2">
+                <input class="md:w-full" hlmInput type="text" placeholder="Apellidos" formControlName="surname" />
+              </hlm-form-field>
+              <hlm-form-field class="my-2">
+                <input class="md:w-full" hlmInput type="text" placeholder="DNI" formControlName="dni" />
+              </hlm-form-field>
+              <hlm-form-field class="my-2 w-[185px] relative">
+                <input class="w-full" hlmInput type="date" placeholder="Fecha de nacimiento" formControlName="birthdate" />
+                <button type="button" (click)="displayToast()"  class="absolute inset-y-0 -top-2 right-1 flex items-center justify-center p-0 border-0 bg-transparent">
+                  <hlm-icon size="sm" name="lucideBadgeInfo"></hlm-icon>
+                </button>
+              </hlm-form-field>
+
+
+            </div>
+            <hlm-form-field class="my-2">
+              <input formControlName="address" hlmInput class="w-full" placeholder="Haz click en el mapa..." type="text" readonly />
+            </hlm-form-field>
+            <app-map (locationUpdated)="locationUpdated($event)" class="w-full h-[200px] sm:h-[300px] block"></app-map>
+            <div class="flex items-center gap-3 sm:flex-row sm:justify-between justify-center">
+              <button (click)="goToTab1($event)" class="mt-6" hlmBtn>Anterior paso</button>
+              <button type="submit" (click)="onRegister()" class="mt-6" hlmBtn>Registrarse</button>
+            </div>
+          </div>
+        </form>
+      </hlm-tabs>
+    </div>
+  </div>
+</div>

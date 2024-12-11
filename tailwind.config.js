@@ -8,7 +8,15 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        nunitoSans: ['Nunito Sans', "sans-serif"],
+        fredoka: ['Fredoka', "sans-serif"],
+      },
+      colors: {
+        primary: {
+          100: "#f9f7f3",
+          200: "#FFDEA8",
+          300: "#FFC570",
+          400: "#FFA037",
+        }
       }
     },
   },
